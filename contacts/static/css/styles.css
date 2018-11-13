@@ -53,13 +53,13 @@ table {
 }
 
 
-.roomDescription {
-    width: 40%;
+.personDescription {
+    width: 50%;
 }
 
-.formNumber {
-    width: 80px;
-}
+/*.formNumber {*/
+    /*width: 80px;*/
+/*}*/
 
 .centerTableCol {
     text-align: center;
