@@ -45,7 +45,7 @@
     <hr>
     <h3 class="h3">Address:</h3>
 
-    <form action="/modify/{{ address.id }}" method="post">
+    <form action="/modify/{{ modified_person.id }}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label>Street:</label>
