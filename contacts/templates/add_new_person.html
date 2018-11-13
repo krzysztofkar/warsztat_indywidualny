@@ -1,0 +1,47 @@
+{% include  "header.html" %}
+
+{% if msg %}
+    <h3 class="h3">{{ msg }}</h3>
+
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">First Name</th>
+            <th scope="col" class="centerTableCol">Last Name</th>
+            <th scope="col" class="centerTableCol">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="centerTableCol">{{ new_guy.name }}</td>
+            <td class="centerTableCol">{{ new_guy.surname }}</td>
+            <td class="personDescription">{{ new_guy.description }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+{% else %}
+
+    <h3 class="h3">Add new Person:</h3>
+
+    <form action="/new" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="name" maxlength="64" class="form-control">
+        </div>
+                <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="surname" maxlength="64" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" min="0" class="form-control">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add Person</button>
+    </form>
+{% endif %}
+
+{% include "footer.html" %}
