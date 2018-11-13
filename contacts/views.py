@@ -35,7 +35,9 @@ def modify_person_view(request, id):
         surname = request.POST.get('surname')
         description = request.POST.get('description')
 
-        modified_person(name=name, surname=surname, description=description)
+        modified_person.name = name
+        modified_person.surname = surname
+        modified_person.description = description
         modified_person.save()
 
         msg = "Personal details modified!"
@@ -43,7 +45,6 @@ def modify_person_view(request, id):
         ctx = {"msg": msg, "modified_person": modified_person}
 
         return render(request, "modify_person.html", ctx)
-
 
     elif request.method == "GET":
 
@@ -53,4 +54,5 @@ def modify_person_view(request, id):
         ctx = {"modified_person": modified_person}
 
         return render(request, "modify_person.html", ctx)
+
 
