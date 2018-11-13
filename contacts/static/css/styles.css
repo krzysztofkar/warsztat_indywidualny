@@ -1,0 +1,66 @@
+html {
+    height: 100%;
+    width: 100%;
+    display: table;
+}
+
+body {
+    display: table-cell;
+    min-height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: #eeeeee;
+    color: #28283e;
+
+}
+
+.headerRooms {
+    width: 80%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.websiteHeader {
+    background-color: darkslateblue;
+    width: 100%;
+}
+
+#logo {
+    font-family: 'Lato', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: #eeeeee;
+    padding: 3px 0 5px 0;
+    margin: 0 10px 0 10px;
+}
+
+.mainContainer {
+    width: 80%;
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    border-left: 2px gray solid;
+    border-right: 2px gray solid;
+    padding: 15px 15px;
+    background-color: whitesmoke;
+}
+
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+
+.roomDescription {
+    width: 40%;
+}
+
+.formNumber {
+    width: 80px;
+}
+
+.centerTableCol {
+    text-align: center;
+}
