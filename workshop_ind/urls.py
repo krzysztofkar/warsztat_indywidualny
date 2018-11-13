@@ -17,15 +17,15 @@ from django.contrib import admin
 
 from django.urls import path, re_path
 
-from contacts.views import add_new_person_view
+from contacts.views import add_new_person_view, modify_person_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path('/new', add_new_person_view),
-    re_path(r'^modify/(?P<id>[0-9]+)$', modify_person_view),
-    re_path(r'^delete_person/(?P<id>[0-9]+)$', delete_person_view),
-    re_path(r'^show/(?P<id>[0-9]+)$', show_person_view),
-    re_path(r'/', show_all_persons_view),
-    re_path(r'^person/(?P<id>[0-9]+)/$', person_view, name="person"),
+    path('new', add_new_person_view),
+   re_path(r'^modify/(?P<id>[0-9]+)$', modify_person_view),
+   # re_path(r'^delete_person/(?P<id>[0-9]+)$', delete_person_view),
+   # re_path(r'^show/(?P<id>[0-9]+)$', show_person_view),
+   # re_path(r'/', show_all_persons_view),
+   # re_path(r'^person/(?P<id>[0-9]+)/$', person_view, name="person"),
 
 ]

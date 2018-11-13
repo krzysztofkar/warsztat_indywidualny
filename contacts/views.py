@@ -24,3 +24,33 @@ def add_new_person_view(request):
     elif request.method == "GET":
 
         return render(request, "add_new_person.html", {})
+
+
+def modify_person_view(request, id):
+
+    if request.method == "POST":
+
+        modified_person = Person.objects.get(pk=id)
+        name = request.POST.get('name')
+        surname = request.POST.get('surname')
+        description = request.POST.get('description')
+
+        modified_person(name=name, surname=surname, description=description)
+        modified_person.save()
+
+        msg = "Personal details modified!"
+
+        ctx = {"msg": msg, "modified_person": modified_person}
+
+        return render(request, "modify_person.html", ctx)
+
+
+    elif request.method == "GET":
+
+        id = int(id)
+        modified_person = Person.objects.get(pk=id)
+
+        ctx = {"modified_person": modified_person}
+
+        return render(request, "modify_person.html", ctx)
+
