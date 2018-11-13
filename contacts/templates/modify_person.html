@@ -3,36 +3,41 @@
 {% if msg %}
     <h3 class="h3">{{ msg }}</h3>
 
-{#    <table class="table">#}
-{#        <thead class="thead-light">#}
-{#        <tr>#}
-{#            <th scope="col" class="centerTableCol">First Name</th>#}
-{#            <th scope="col" class="centerTableCol">Last Name</th>#}
-{#            <th scope="col" class="centerTableCol">Description</th>#}
-{#        </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#        <tr>#}
-{#            <td class="centerTableCol">{{ modified_person.name }}</td>#}
-{#            <td class="centerTableCol">{{ modified_person.surname }}</td>#}
-{#            <td class="personDescription">{{ modified_person.description }}</td>#}
-{#        </tr>#}
-{#        </tbody>#}
-{#    </table>#}
+    {#    <table class="table">#}
+    {#        <thead class="thead-light">#}
+    {#        <tr>#}
+    {#            <th scope="col" class="centerTableCol">First Name</th>#}
+    {#            <th scope="col" class="centerTableCol">Last Name</th>#}
+    {#            <th scope="col" class="centerTableCol">Description</th>#}
+    {#        </tr>#}
+    {#        </thead>#}
+    {#        <tbody>#}
+    {#        <tr>#}
+    {#            <td class="centerTableCol">{{ modified_person.name }}</td>#}
+    {#            <td class="centerTableCol">{{ modified_person.surname }}</td>#}
+    {#            <td class="personDescription">{{ modified_person.description }}</td>#}
+    {#        </tr>#}
+    {#        </tbody>#}
+    {#    </table>#}
 
 {% else %}
 
-    <h3 class="h3">Modify Person Data:</h3>
+    <h3 class="h3">Modify Person data:</h3>
+    <hr>
+    <h4 class="h4">Basic information:</h4>
+    <hr>
 
     <form action="" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label>First Name</label>
-            <input type="text" name="name" maxlength="64" value="{{ modified_person.name }}" class="form-control">
+            <input type="text" name="name" maxlength="64" value="{{ modified_person.name }}"
+                   class="form-control shortFormsFields">
         </div>
         <div class="form-group">
             <label>Last Name</label>
-            <input type="text" name="surname" maxlength="64" value="{{ modified_person.surname }}" class="form-control">
+            <input type="text" name="surname" maxlength="64" value="{{ modified_person.surname }}"
+                   class="form-control shortFormsFields">
         </div>
         <div class="form-group">
             <label>Description</label>
@@ -43,36 +48,42 @@
     </form>
 
     <hr>
-    <h3 class="h3">Address:</h3>
+    <h4 class="h4">Address:</h4>
+    <hr>
 
-    <form action="/modify/{{ address.id }}" method="post">
+    <form action="/modify_address/{{ address.id }}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label>Street:</label>
-            <input type="text" name="street_name" maxlength="64" value="{{ address.street_name }}" class="form-control">
+            <input type="text" name="street_name" maxlength="64" value="{{ address.street_name }}"
+                   class="form-control shortFormsFields ">
         </div>
 
         <div class="form-group">
             <label>House Number:</label>
-            <input type="number" name="house_number" min=1 value="{{ address.house_number }}" class="form-control">
+            <input type="number" name="house_number" min=1 value="{{ address.house_number }}"
+                   class="form-control formNumbers">
         </div>
         <div class="form-group">
             <label>Flat Number:</label>
-            <input type="number" name="flat_number" min=1 value="{{ address.flat_number }}" class="form-control">
+            <input type="number" name="flat_number" min=1 value="{{ address.flat_number }}"
+                   class="form-control formNumbers">
         </div>
         <div class="form-group">
             <label>City</label>
-            <input type="text" name="city" maxlength="64" value="{{ address.city }}" class="form-control">
+            <input type="text" name="city" maxlength="64" value="{{ address.city }}"
+                   class="form-control shortFormsFields ">
         </div>
         <br>
         <button type="submit" class="btn btn-warning">Modify Address!</button>
+        <a href="/delete/{{ address.id }}">
+            <button class="btn btn-danger">Delete Address!</button>
+        </a>
     </form>
-    <a href="/delete/{{ address.id }}">
-        <button class="btn btn-danger">Delete Address!</button>
-    </a>
+    <br>
 
-    <p>add later .....</p>
-    <h3 class="h3">Telephone Numbers:</h3>
+    <h4 class="h4">Telephone Numbers:</h4>
+
     <p>add later .....</p>
     <h3 class="h3">email addresses:</h3>
     <p>add later .....</p>

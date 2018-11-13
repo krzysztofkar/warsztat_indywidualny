@@ -49,9 +49,39 @@ def modify_person_view(request, id):
     elif request.method == "GET":
 
         id = int(id)
+
         modified_person = Person.objects.get(pk=id)
 
-        ctx = {"modified_person": modified_person}
+        address = Address.objects.get(pk=id)
+
+        ctx = {"modified_person": modified_person,
+
+               "address": address,
+
+               }
 
         return render(request, "modify_person.html", ctx)
 
+
+def modify_address_view(request, id):
+    if request.method == "POST":
+        id = int(id)
+        modified_address = Address.objects.get(pk=id)
+        city = request.POST.get('city')
+        street_name = request.POST.get('street_name')
+        house_number = request.POST.get('house_number')
+        flat_number = request.POST.get('flat_number')
+
+        modified_address.city = city
+        modified_address.street_name = street_name
+        modified_address.house_number = house_number
+        modified_address.flat_number = flat_number
+        modified_address.save()
+
+        msg = "Address modified!"
+
+        ctx = {"msg": msg,
+               "address": modified_address
+               }
+
+        return render(request, "modify_person.html", ctx)

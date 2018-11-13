@@ -26,6 +26,14 @@ body {
     width: 100%;
 }
 
+.formNumbers {
+    width: 90px;
+}
+
+.shortFormsFields {
+    width: 50%;
+}
+
 #logo {
     font-family: 'Lato', sans-serif;
     font-size: 30px;
@@ -51,11 +59,9 @@ table {
     word-wrap: break-word;
 }
 
-
 .personDescription {
     width: 50%;
 }
-
 
 .centerTableCol {
     text-align: center;
