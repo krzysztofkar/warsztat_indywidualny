@@ -13,7 +13,6 @@ body {
     font-family: 'Lato', sans-serif;
     background-color: #eeeeee;
     color: #28283e;
-
 }
 
 .headerRooms {
@@ -23,7 +22,7 @@ body {
 }
 
 .websiteHeader {
-    background-color: darkslateblue;
+    background-color: #000099;
     width: 100%;
 }
 
@@ -57,9 +56,6 @@ table {
     width: 50%;
 }
 
-/*.formNumber {*/
-    /*width: 80px;*/
-/*}*/
 
 .centerTableCol {
     text-align: center;
