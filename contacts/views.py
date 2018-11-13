@@ -51,8 +51,15 @@ def modify_person_view(request, id):
         id = int(id)
 
         modified_person = Person.objects.get(pk=id)
+        address_id = modified_person.address_id
 
-        address = Address.objects.get(pk=id)
+        if address_id is None:
+            ctx = {"modified_person": modified_person}
+
+            return render(request, "modify_person.html", ctx)
+
+
+        address = Address.objects.get(pk=address_id)
 
         ctx = {"modified_person": modified_person,
 
@@ -65,7 +72,9 @@ def modify_person_view(request, id):
 
 def modify_address_view(request, id):
     if request.method == "POST":
+
         id = int(id)
+
         modified_address = Address.objects.get(pk=id)
         city = request.POST.get('city')
         street_name = request.POST.get('street_name')
@@ -82,6 +91,22 @@ def modify_address_view(request, id):
 
         ctx = {"msg": msg,
                "address": modified_address
+               }
+
+        return render(request, "modify_person.html", ctx)
+
+
+def delete_address_view(request, id):
+
+    if request.method == "GET":
+
+        id = int(id)
+        address_to_delete = Address.objects.get(pk=id)
+        address_to_delete.delete()
+
+        msg = "Address deleted!"
+
+        ctx = {"msg": msg,
                }
 
         return render(request, "modify_person.html", ctx)
