@@ -60,7 +60,6 @@ def modify_person_view(request, id):
 
         return render(request, "modify_person.html", ctx)
 
-
     elif request.method == "GET":
 
         id = int(id)
@@ -73,4 +72,5 @@ def modify_person_view(request, id):
                }
 
         return render(request, "modify_person.html", ctx)
+
 
