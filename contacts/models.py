@@ -41,4 +41,3 @@ class Email(models.Model):
 class Groups(models.Model):
     name = models.CharField(max_length=64)
     person = models.ManyToManyField(Person)
-
