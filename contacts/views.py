@@ -111,3 +111,27 @@ def delete_address_view(request, id):
                }
 
         return render(request, "delete_address_response.html", ctx)
+
+
+def add_address_view(request, id):
+
+    if request.method == "POST":
+
+        city = request.POST.get('city')
+        street_name = request.POST.get('street_name')
+        house_number = request.POST.get('house_number')
+        flat_number = request.POST.get('flat_number')
+
+        id = int(id)
+        new_address = Address.objects.create(city=city, street_name=street_name, house_number=house_number, flat_number=flat_number)
+        modified_person = Person.objects.get(pk=id)
+        modified_person.address_id = new_address.id
+        modified_person.save()
+
+        msg = "New Address Added"
+        ctx = {'msg': msg, "address": new_address}
+
+        return render(request, "modify_person.html", ctx)
+
+
+
