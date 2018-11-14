@@ -3,29 +3,10 @@
 {% if msg %}
     <h3 class="h3">{{ msg }}</h3>
 
-    {#    <table class="table">#}
-    {#        <thead class="thead-light">#}
-    {#        <tr>#}
-    {#            <th scope="col" class="centerTableCol">First Name</th>#}
-    {#            <th scope="col" class="centerTableCol">Last Name</th>#}
-    {#            <th scope="col" class="centerTableCol">Description</th>#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {#        <tbody>#}
-    {#        <tr>#}
-    {#            <td class="centerTableCol">{{ modified_person.name }}</td>#}
-    {#            <td class="centerTableCol">{{ modified_person.surname }}</td>#}
-    {#            <td class="personDescription">{{ modified_person.description }}</td>#}
-    {#        </tr>#}
-    {#        </tbody>#}
-    {#    </table>#}
-
 {% else %}
 
     <h3 class="h3">Modify Person data:</h3>
-    <hr>
     <h4 class="h4">Basic information:</h4>
-    <hr>
 
     <form action="" method="post">
         {% csrf_token %}
@@ -45,10 +26,8 @@
         </div>
         <button type="submit" class="btn btn-warning">Modify Person!</button>
     </form>
-
-    <hr>
+    <br>
     <h4 class="h4">Address:</h4>
-    <hr>
     {% if address %}
         <form action="/modify_address/{{ address.id }}" method="post">
             {% csrf_token %}
@@ -78,8 +57,7 @@
         <a href="/delete/{{ address.id }}">
             <button class="btn btn-danger">Delete Address!</button>
         </a>
-        <br>
-        <hr>
+        <br><br>
     {% else %}
         <form action="/add_address/{{ modified_person.id }}" method="post">
             {% csrf_token %}
@@ -107,7 +85,6 @@
     {% endif %}
 
     <h4 class="h4">Telephone Numbers:</h4>
-    <hr>
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -129,7 +106,6 @@
                     <td class="centerTableCol">
                         <select name="phone_type" class="form-control">
                             {% for dic_value in phone_types %}
-                                dic value {{ dic_value.0|slugify }}  i tel type {{ tel_number.phone_type|slugify }}
                                 {% if dic_value.0 ==  tel_number.phone_type %}
                                     <option selected value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
                                 {% else %}
@@ -149,8 +125,8 @@
         {% endfor %}
         </tbody>
     </table>
-    <br>
-    <h4 class="h4">Add new telephone number</h4>
+    <hr>
+    <h5 class="h5">Add new telephone number</h5>
     <hr>
     <table class="table">
         <thead class="thead-light">
@@ -182,8 +158,81 @@
         </tbody>
     </table>
 
-    <h3 class="h3">email addresses:</h3>
-    <p>add later .....</p>
+    <h4 class="h4">Email Addresses:</h4>
+<table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">Email Address</th>
+            <th scope="col" class="centerTableCol">Type</th>
+            <th scope="col" class="centerTableCol">Modify</th>
+            <th scope="col" class="centerTableCol">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for email_address in emails %}
+            <tr>
+                <form action="/modify_email/{{ email_address.id }}" method="post">
+                    {% csrf_token %}
+                    <td class="centerTableCol">
+                        <input type="number" name="email" min="0" value="{{ email_address.email }}"
+                               class="form-control">
+                    </td>
+                    <td class="centerTableCol">
+                        <select name="phone_type" class="form-control">
+                            {% for dic_value in email_types %}
+                                {% if dic_value.0 ==  email_address.email_type %}
+                                    <option selected value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
+                                {% else %}
+                                    <option value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="centerTableCol">
+                        <button type="submit" class="btn btn-warning">Modify Email!</button>
+                    </td>
+                </form>
+                <td class="centerTableCol"><a href="/delete_phone/{{  email_address.id  }}">
+                    <button class="btn btn-danger">Delete Email!</button>
+                </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <hr>
+    <h5 class="h5">Add new email address</h5>
+    <hr>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">Email Address</th>
+            <th scope="col" class="centerTableCol">Type</th>
+            <th scope="col" class="centerTableCol">Add New Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form action="/add_email/{{ modified_person.id }}" method="post">
+                {% csrf_token %}
+                <td class="centerTableCol">
+                    <input type="number" name="email" min="0" class="form-control">
+                </td>
+                <td class="centerTableCol">
+                    <select name="email_type" class="form-control">
+                        <option value="1">Work</option>
+                        <option value="2">Home</option>
+                        <option value="3">Private</option>
+                    </select>
+                </td>
+                <td class="centerTableCol">
+                    <button type="submit" class="btn btn-primary">Add Email</button>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+
 
 {% endif %}
 {% include "footer.html" %}

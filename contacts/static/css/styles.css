@@ -22,7 +22,7 @@ body {
 }
 
 .websiteHeader {
-    background-color: #000099;
+    background-color: #003166;
     width: 100%;
 }
 
@@ -65,4 +65,16 @@ table {
 
 .centerTableCol {
     text-align: center;
+}
+
+.h4 {
+    background-color: #0063cc;
+    color: white;
+    padding: 10px 15px;
+}
+
+.h3 {
+    background-color: #004a99;
+    color: white;
+    padding: 10px 15px;
 }
