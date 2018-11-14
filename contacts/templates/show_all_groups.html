@@ -1,14 +1,22 @@
 {% include  "header.html" %}
 
 {% if msg %}
-    <h3 class="h3">{{ msg }}</h3>
-
-
-
 {% else %}
-
-    <h3 class="h3">User </h3>
+    <h3 class="h3 h3Colors">All Groups</h3>
+        <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">Group Members</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for gr in user_groups %}
+        <tr>
+            <td class="centerTableCol">{{ gr.name }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endif %}
-
 {% include "footer.html" %}
