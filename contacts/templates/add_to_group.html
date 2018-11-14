@@ -1,5 +1,5 @@
 {% include  "header.html" %}
-
+<script> xxxxxx</script>
 {% if msg %}
     <h3 class="h3">User: {{ user.name }} {{ user.surname }} {{ msg }}</h3>
     <table class="table">
@@ -20,12 +20,12 @@
 
 {% else %}
 
-    <h3 class="h3">Add {{ user.name }} {{ user.surname }} to Group:</h3>
+    <h3 class="h3 h3Colors">{{ user.name }} {{ user.surname }} - Groups Assigment:</h3>
     <form action="/add_to_group/{{ user.id }}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label>Select Groups:</label>
-            <select multiple class="form-control" name="groups">
+            <label>Select Groups You want to be member of:</label>
+            <select multiple class="form-control" name="groups" id="groupsSelection">
                 {% for gr in groups %}
                     {% if gr in user_groups %}
                         <option selected value="{{ gr.id }}">{{ gr.name }}</option>
@@ -36,7 +36,7 @@
             </select>
         </div>
         <br>
-        <button type="submit" class="btn btn-primary">Add to Group</button>
+        <button type="submit" class="btn btn-primary">Assign to Groups</button>
     </form>
 {% endif %}
 
