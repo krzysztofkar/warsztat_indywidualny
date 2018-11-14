@@ -367,3 +367,13 @@ def add_to_group_view(request, id):
 
         return render(request, "add_to_group.html", ctx)
 
+def show_all_groups_view(request):
+
+    if request.method == "GET":
+
+        groups = Groups.objects.all()
+        group_users = Groups.person.all()
+
+        ctx = {"groups": groups, "group_users": group_users}
+
+        return render(request, "show_all_groups.html", ctx)
