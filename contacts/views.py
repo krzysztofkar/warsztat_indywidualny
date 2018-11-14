@@ -174,10 +174,13 @@ def modify_phone_view(request, id):
 
 def delete_phone_view(request, id):
 
-    if request.method == "POST":
+    if request.method == "GET":
+
+        id = int(id)
 
         phone_to_delete = Phone.objects.get(pk=id)
         phone_to_delete.delete()
+        # Person.objects.get(phone_id=id).delete()
 
         msg = "Phone deleted!"
         ctx = {"msg": msg}

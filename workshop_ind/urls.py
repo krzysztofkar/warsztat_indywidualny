@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 
 from contacts.views import add_new_person_view, modify_person_view, modify_address_view, delete_address_view, \
-    add_address_view, add_phone_view
+    add_address_view, add_phone_view, modify_phone_view, delete_phone_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,8 @@ urlpatterns = [
     re_path(r'^delete/(?P<id>[0-9]+)$', delete_address_view),
     re_path(r'^add_address/(?P<id>[0-9]+)$', add_address_view),
     re_path(r'^add_phone/(?P<id>[0-9]+)$', add_phone_view),
+    re_path(r'^modify_phone/(?P<id>[0-9]+)$', modify_phone_view),
+    re_path(r'^delete_phone/(?P<id>[0-9]+)$', delete_phone_view),
 
     # re_path(r'^show/(?P<id>[0-9]+)$', show_person_view),
    # re_path(r'/', show_all_persons_view),
