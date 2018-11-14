@@ -60,14 +60,21 @@ def modify_person_view(request, id):
 
 
         address = Address.objects.get(pk=address_id)
+
         phone_number = Phone.objects.filter(person_id=id)
         phone_types = Phone.PHONE_TYPES
+
+        emails = Email.objects.filter(person_id=id)
+        email_types = Email.EMAIL_TYPES
 
         ctx = {"modified_person": modified_person,
 
                "address": address,
                "phone_number": phone_number,
                "phone_types": phone_types,
+
+                "emails": emails,
+               "email_types": email_types,
 
                }
 
@@ -188,6 +195,19 @@ def delete_phone_view(request, id):
         return render(request, "delete_phone_response.html", ctx)
 
 
+def add_email_view(request, id):
+
+    if request.method == "POST":
+
+        email = request.POST.get("email")
+        email_type = request.POST.get("email_type")
+
+        new_mail = Phone.objects.create(email=email, email_type=email_type, person_id=id)
+
+        msg = "New Mail Added!"
+        ctx = {"msg": msg}
+
+        return request(request, "add_email_response.html", ctx)
 
 
 
