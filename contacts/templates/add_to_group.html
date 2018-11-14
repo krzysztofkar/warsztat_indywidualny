@@ -1,20 +1,20 @@
 {% include  "header.html" %}
 
 {% if msg %}
-    <h3 class="h3">{{ msg }}</h3>
+    <h3 class="h3">User: {{ user.name }} {{ user.surname }} {{ msg }}</h3>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">Group Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="centerTableCol">{{ group.name }}</td>
+        </tr>
+        </tbody>
+    </table>
 
-{#    <table class="table">#}
-{#        <thead class="thead-light">#}
-{#        <tr>#}
-{#            <th scope="col" class="centerTableCol"></th>#}
-{#        </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#        <tr>#}
-{#            <td class="centerTableCol">{{ group.name }}</td>#}
-{#        </tr>#}
-{#        </tbody>#}
-{#    </table>#}
 
 {% else %}
 
@@ -25,8 +25,14 @@
             <label>Select Groups:</label>
             <select multiple class="form-control" name="groups">
                 {% for gr in groups %}
-                <option value="{{ gr.id }}">{{ gr.name }}</option>
-                {% endfor %}
+                    {% for u_group in user_groups %}
+                        {% if u.group.id == gr.is %}
+                            <option selected value="{{ gr.id }}">{{ gr.name }}</option>
+                        {% else %}
+                            <option value="{{ gr.id }}">{{ gr.name }}</option>
+                        {% endif %}
+
+                    {% endfor %}
                 {% endfor %}
             </select>
         </div>

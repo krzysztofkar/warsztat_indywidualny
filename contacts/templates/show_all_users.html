@@ -19,13 +19,13 @@
             <tr>
                 <td><a href="/show_person_details/{{ user.id }}">{{ user.surname }}</a></td>
                 <td><a href="/show_person_details/{{ user.id }}">{{ user.name }}</a></td>
-                <td>
-                     <td class="centerTableCol">
-                    <a href="/add_to_group/{{ user.id }}"><button class="btn btn-primary">Add to Group</button>
-                </td>
+                <td class="centerTableCol">
+                    <a href="/add_to_group/{{ user.id }}">
+                        <button class="btn btn-primary">Add to Group</button>
                 </td>
                 <td class="centerTableCol">
-                    <a href="/modify/{{ user.id }}"><button class="btn btn-warning">Modify</button>
+                    <a href="/modify/{{ user.id }}">
+                        <button class="btn btn-warning">Modify</button>
                 </td>
                 <td class="centerTableCol">
                     <a href="/delete_person/{{ user.id }}">
