@@ -351,7 +351,7 @@ def add_to_group_view(request, id):
             group.person.add(user)
             group.save()
 
-        msg = "added to Groups:"
+        msg = "assigned to Groups:"
 
         ctx = {"user": user, "groups": groups, "user_groups": user_groups, "msg": msg}
 
