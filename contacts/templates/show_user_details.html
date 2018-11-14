@@ -72,7 +72,7 @@
             {% for tel_number in phone %}
                 <tr>
                     <td class="centerTableCol">{{ tel_number.phone_number }}</td>
-                    <td class="centerTableCol">{{ tel_number.phone_type }}</td>
+                    <td class="centerTableCol">{{ tel_number.get_phone_type_display }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -95,7 +95,7 @@
             {% for email_address in email %}
                 <tr>
                     <td class="centerTableCol">{{ email_address.email }}</td>
-                    <td class="centerTableCol">{{ email_address.email_type }}</td>
+                    <td class="centerTableCol">{{ email_address.get_email_type_display }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -103,6 +103,12 @@
     {% else %}
         <p>No email address</p>
     {% endif %}
-
+    <hr>
+    <a href="/modify/{{ person.id }}">
+        <button type="submit" class="btn btn-warning">Modify Person!</button>
+    </a>
+    <a href="/delete_person/{{ person.id }}">
+        <button class="btn btn-danger">Delete Person!</button>
+    </a>
 {% endif %}
 {% include "footer.html" %}
