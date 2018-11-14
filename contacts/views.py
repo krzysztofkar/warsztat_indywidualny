@@ -86,6 +86,8 @@ def modify_address_view(request, id):
 
         id = int(id)
 
+        modified_person = Person.objects.get(address_id=id)
+
         modified_address = Address.objects.get(pk=id)
         city = request.POST.get('city')
         street_name = request.POST.get('street_name')
@@ -101,10 +103,11 @@ def modify_address_view(request, id):
         msg = "Address modified!"
 
         ctx = {"msg": msg,
-               "address": modified_address
+               "address": modified_address,
+               "modified_person": modified_person
                }
 
-        return render(request, "modify_address_response.html", ctx)
+        return render(request, "add_address_response.html", ctx)
 
 
 def delete_address_view(request, id):
@@ -120,7 +123,7 @@ def delete_address_view(request, id):
         ctx = {"msg": msg,
                }
 
-        return render(request, "delete_address_response.html", ctx)
+        return render(request, "standard_response.html", ctx)
 
 
 def add_address_view(request, id):
@@ -154,7 +157,9 @@ def add_phone_view(request, id):
         new_phone = Phone.objects.create(phone_number=phone_number, phone_type=phone_type, person_id=id)
 
         msg = "New Phone Added!"
-        ctx = {"msg": msg}
+        ctx = {"msg": msg,
+               "new_phone": new_phone
+               }
 
         return request(request, "add_phone_response.html", ctx)
 
@@ -173,9 +178,11 @@ def modify_phone_view(request, id):
         modified_phone.save()
 
         msg = "Phone modified!"
-        ctx = {'msg': msg}
+        ctx = {'msg': msg,
+               "new_phone": modified_phone
+               }
 
-        return render(request, "modify_phone_response.html", ctx)
+        return render(request, "add_phone_response.html", ctx)
 
 
 def delete_phone_view(request, id):
@@ -191,7 +198,7 @@ def delete_phone_view(request, id):
         msg = "Phone deleted!"
         ctx = {"msg": msg}
 
-        return render(request, "delete_phone_response.html", ctx)
+        return render(request, "standard_response.html", ctx)
 
 
 def add_email_view(request, id):
@@ -204,10 +211,43 @@ def add_email_view(request, id):
         new_mail = Email.objects.create(email=email, email_type=email_type, person_id=id)
 
         msg = "New Mail Added!"
-        ctx = {"msg": msg}
+        ctx = {"msg": msg,
+               "emails": new_mail}
 
         return request(request, "add_email_response.html", ctx)
 
 
+def modify_email_view(request, id):
+
+    if request.method == "POST":
+
+        email = request.POST.get('email')
+        email_type = request.POST.get('email_type')
+
+        modified_email = Email.objects.get(pk=id)
+
+        modified_email.email = email
+        modified_email.email_type = email_type
+        modified_email.save()
+
+        msg = "Phone modified!"
+        ctx = {'msg': msg,
+               "emails": modified_email
+               }
+
+        return render(request, "add_email_response.html", ctx)
 
 
+def delete_email_view(request, id):
+
+    if request.method == "GET":
+
+        id = int(id)
+
+        email_to_delete = Email.objects.get(pk=id)
+        email_to_delete.delete()
+
+        msg = "Phone deleted!"
+        ctx = {"msg": msg}
+
+        return render(request, "standard_response.html", ctx)
