@@ -131,7 +131,24 @@ def add_address_view(request, id):
         msg = "New Address Added"
         ctx = {'msg': msg, "address": new_address}
 
+        return render(request, "add_address_response.html", ctx)
+
+def add_phone_view(request, id):
+
+    if request.method == "POST":
+
+        phone_number = request.POST.get("phone_number")
+        phone_type = request.POST.get("phone_type")
+
+        new_phone = Phone.objects.create(phone_number=phone_number, phone_type=phone_type, person_id=id)
+
+        msg = "New Phone Added!"
+        ctx = {"msg": msg}
+
+        return request(request, "add_phone_response.html", ctx)
+
+    if request.method == "GET":
+        phone_types = Phone.PHONE_TYPES
+
+        ctx = {"phone_types": phone_types}
         return render(request, "modify_person.html", ctx)
-
-
-
