@@ -317,3 +317,17 @@ def show_user_details_view(request, id):
 
         return render(request, "show_user_details.html", ctx)
 
+
+def add_group_view(request):
+
+    if request.method == "POST":
+
+        name = request.POST.get('name')
+        group = Groups.objects.create(name=name)
+
+        msg = "Group added!"
+        ctx = {"msg": msg}
+
+        return render(render, "add_group.html", ctx)
+
+
