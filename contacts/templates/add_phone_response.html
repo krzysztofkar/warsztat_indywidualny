@@ -1,0 +1,32 @@
+{% include  "header.html" %}
+
+{% if msg %}
+    <h3 class="h3">{{ msg }}</h3>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col" class="centerTableCol">First Name</th>
+                <th scope="col" class="centerTableCol">Last Name</th>
+                <th scope="col" class="centerTableCol">Street</th>
+                <th scope="col" class="centerTableCol">House Number</th>
+                <th scope="col" class="centerTableCol">Flat Number</th>
+                <th scope="col" class="centerTableCol">City</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="centerTableCol">{{ modified_person.name }}</td>
+                <td class="centerTableCol">{{ modified_person.surname }}</td>
+                <td class="centerTableCol">{{ address.street_name }}</td>
+                <td class="centerTableCol">{{ address.house_number }}</td>
+                <td class="centerTableCol">{{ address.flat_number }}</td>
+                <td class="centerTableCol">{{ address.city }}</td>
+            </tr>
+            </tbody>
+        </table>
+{% else %}
+Nothing here .......!!!! Check code!
+
+{% endif %}
+
+{% include "footer.html" %}
