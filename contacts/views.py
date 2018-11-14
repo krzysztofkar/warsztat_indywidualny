@@ -326,7 +326,7 @@ def add_group_view(request):
         group = Groups.objects.create(name=name)
 
         msg = "Group added!"
-        ctx = {"msg": msg}
+        ctx = {"msg": msg, "group": group}
 
         return render(render, "add_group.html", ctx)
 
