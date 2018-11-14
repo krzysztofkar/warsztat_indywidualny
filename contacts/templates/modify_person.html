@@ -174,7 +174,7 @@
                 <form action="/modify_email/{{ email_address.id }}" method="post">
                     {% csrf_token %}
                     <td class="centerTableCol">
-                        <input type="number" name="email" min="0" value="{{ email_address.email }}"
+                        <input type="text" name="email" min="0" value="{{ email_address.email }}"
                                class="form-control">
                     </td>
                     <td class="centerTableCol">
