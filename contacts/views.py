@@ -251,3 +251,17 @@ def delete_email_view(request, id):
         ctx = {"msg": msg}
 
         return render(request, "standard_response.html", ctx)
+
+def delete_person_view(request, id):
+
+    if request.method == "GET":
+
+        id = int(id)
+
+        person_to_delete = Person.objects.get(pk=id)
+        person_to_delete.delete()
+
+        msg = "Person deleted!"
+        ctx = {"msg": msg}
+
+        return render(request, "standard_response.html", ctx)
