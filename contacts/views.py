@@ -341,6 +341,7 @@ def add_to_group_view(request, id):
 
         user = Person.objects.get(pk=id)
         groups = request.POST.getlist('groups')
+        user_groups = user.groups_set.all()
 
         for i in groups:
             group = Groups.objects.get(id=i)
@@ -349,10 +350,9 @@ def add_to_group_view(request, id):
 
         msg = "added to Groups:"
 
-        ctx = {"user": user, "groups": groups, "msg": msg}
+        ctx = {"user": user, "groups": groups, "user_groups":user_groups, "msg": msg}
 
         return render(request, "add_to_group.html", ctx)
-
 
     elif request.method == "GET":
 
