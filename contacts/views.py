@@ -161,7 +161,7 @@ def add_phone_view(request, id):
                "new_phone": new_phone
                }
 
-        return request(request, "add_phone_response.html", ctx)
+        return render(request, "add_phone_response.html", ctx)
 
 
 def modify_phone_view(request, id):
@@ -176,6 +176,8 @@ def modify_phone_view(request, id):
         modified_phone.phone_number = phone_number
         modified_phone.phone_type = phone_type
         modified_phone.save()
+
+        modified_phone = Phone.objects.get(pk=id)
 
         msg = "Phone modified!"
         ctx = {'msg': msg,
@@ -214,7 +216,7 @@ def add_email_view(request, id):
         ctx = {"msg": msg,
                "emails": new_mail}
 
-        return request(request, "add_email_response.html", ctx)
+        return render(request, "add_email_response.html", ctx)
 
 
 def modify_email_view(request, id):
@@ -229,8 +231,9 @@ def modify_email_view(request, id):
         modified_email.email = email
         modified_email.email_type = email_type
         modified_email.save()
+        modified_email = Email.objects.get(pk=id)
 
-        msg = "Phone modified!"
+        msg = "Mail modified!"
         ctx = {'msg': msg,
                "emails": modified_email
                }
@@ -247,10 +250,11 @@ def delete_email_view(request, id):
         email_to_delete = Email.objects.get(pk=id)
         email_to_delete.delete()
 
-        msg = "Phone deleted!"
+        msg = "Mail deleted!"
         ctx = {"msg": msg}
 
         return render(request, "standard_response.html", ctx)
+
 
 def delete_person_view(request, id):
 
@@ -259,9 +263,21 @@ def delete_person_view(request, id):
         id = int(id)
 
         person_to_delete = Person.objects.get(pk=id)
+
+        person_to_delete.address.delete()
         person_to_delete.delete()
 
         msg = "Person deleted!"
         ctx = {"msg": msg}
 
         return render(request, "standard_response.html", ctx)
+
+
+def show_all_users_view(request):
+
+    if request.method == "GET":
+
+        users = Person.objects.all().order_by('surname').order_by('name')
+        ctx = {"users": users}
+
+        return render(request, "show_all_users.html", ctx)
