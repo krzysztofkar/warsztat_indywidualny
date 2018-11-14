@@ -5,22 +5,14 @@
         <table class="table">
             <thead class="thead-light">
             <tr>
-                <th scope="col" class="centerTableCol">First Name</th>
-                <th scope="col" class="centerTableCol">Last Name</th>
-                <th scope="col" class="centerTableCol">Street</th>
-                <th scope="col" class="centerTableCol">House Number</th>
-                <th scope="col" class="centerTableCol">Flat Number</th>
-                <th scope="col" class="centerTableCol">City</th>
+                <th scope="col" class="centerTableCol">Telephone Number</th>
+                <th scope="col" class="centerTableCol">Type</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td class="centerTableCol">{{ modified_person.name }}</td>
-                <td class="centerTableCol">{{ modified_person.surname }}</td>
-                <td class="centerTableCol">{{ address.street_name }}</td>
-                <td class="centerTableCol">{{ address.house_number }}</td>
-                <td class="centerTableCol">{{ address.flat_number }}</td>
-                <td class="centerTableCol">{{ address.city }}</td>
+                <td class="centerTableCol">{{ new_phone.phone_number }}</td>
+                <td class="centerTableCol">{{ new_phone.get_phone_type_display }}</td>
             </tr>
             </tbody>
         </table>
