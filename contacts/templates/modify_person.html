@@ -26,7 +26,10 @@
         </div>
         <button type="submit" class="btn btn-warning">Modify Person!</button>
     </form>
-    <br>
+    <a href="/delete_person/{{ modified_person.id }}">
+        <button class="btn btn-danger">Delete Address!</button>
+    </a>
+    <br><br>
     <h4 class="h4 h4Colors">Address:</h4>
     {% if address %}
         <form action="/modify_address/{{ address.id }}" method="post">
@@ -159,7 +162,7 @@
     </table>
 
     <h4 class="h4 h4Colors">Email Addresses:</h4>
-<table class="table">
+    <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col" class="centerTableCol">Email Address</th>
@@ -192,7 +195,7 @@
                         <button type="submit" class="btn btn-warning">Modify Email!</button>
                     </td>
                 </form>
-                <td class="centerTableCol"><a href="/delete_email/{{  email_address.id  }}">
+                <td class="centerTableCol"><a href="/delete_email/{{ email_address.id }}">
                     <button class="btn btn-danger">Delete Email!</button>
                 </a></td>
             </tr>
