@@ -3,9 +3,10 @@
 {% if msg %}
 {% else %}
 <h3 class="h3 h3Colors">All Groups</h3>
-<table class="table">
-    <thead class="thead-light">
+
     {% for gr in groups %}
+        <table class="table">
+    <thead class="thead-light">
         <tr>
             <th scope="col" class="centerTableCol">Group: {{ gr.name }}</th>
         </tr>
@@ -14,12 +15,13 @@
         <tr>
             <td class="centerTableCol"><p>
                 {% for usr in gr.person.all %}
-                    {{ usr.name }}  {{ usr.surname }}
+                    {{ usr.name }}  {{ usr.surname }}<br>
                 {% endfor %}
             </p></td>
         </tr>
-    {% endfor %}
-    </tbody>
+            </tbody>
 </table>
+    {% endfor %}
+
 {% endif %}
 {% include "footer.html" %}
