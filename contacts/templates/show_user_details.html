@@ -28,69 +28,81 @@
     </table>
 
     <h4 class="h4 h4Colors">Address:</h4>
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Label</th>
-            <th scope="col" class="centerTableCol">Address Data</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Street</td>
-            <td>{{ address.street_name }}</td>
-        </tr>
-        <tr>
-            <td>House Number</td>
-            <td>{{ address.house_number }}</td>
-        </tr>
-        <tr>
-            <td>Flat Number</td>
-            <td>{{ address.flat_number }}</td>
-        </tr>
-        <tr>
-            <td>City</td>
-            <td>{{ address.city }}</td>
-        </tr>
-        </tbody>
-    </table>
+    {% if address %}
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col" class="centerTableCol">Label</th>
+                <th scope="col" class="centerTableCol">Address Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Street</td>
+                <td>{{ address.street_name }}</td>
+            </tr>
+            <tr>
+                <td>House Number</td>
+                <td>{{ address.house_number }}</td>
+            </tr>
+            <tr>
+                <td>Flat Number</td>
+                <td>{{ address.flat_number }}</td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td>{{ address.city }}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>No address defined</p>
+    {% endif %}
 
     <h4 class="h4 h4Colors">Telephone Numbers:</h4>
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Telephone Number</th>
-            <th scope="col" class="centerTableCol">Type</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for tel_number in phone %}
+    {% if phone %}
+        <table class="table">
+            <thead class="thead-light">
             <tr>
-                <td class="centerTableCol">{{ tel_number.phone_number }}</td>
-                <td class="centerTableCol">{{ tel_number.phone_type }}</td>
+                <th scope="col" class="centerTableCol">Telephone Number</th>
+                <th scope="col" class="centerTableCol">Type</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for tel_number in phone %}
+                <tr>
+                    <td class="centerTableCol">{{ tel_number.phone_number }}</td>
+                    <td class="centerTableCol">{{ tel_number.phone_type }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No email telephone number</p>
+    {% endif %}
 
 
     <h4 class="h4 h4Colors">Email Addresses:</h4>
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Email Address</th>
-            <th scope="col" class="centerTableCol">Type</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for email_address in email %}
+    {% if email %}
+        <table class="table">
+            <thead class="thead-light">
             <tr>
-                <td class="centerTableCol">{{ email_address.email }}</td>
-                <td class="centerTableCol">{{ email_address.email_type }}</td>
+                <th scope="col" class="centerTableCol">Email Address</th>
+                <th scope="col" class="centerTableCol">Type</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for email_address in email %}
+                <tr>
+                    <td class="centerTableCol">{{ email_address.email }}</td>
+                    <td class="centerTableCol">{{ email_address.email_type }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No email address</p>
+    {% endif %}
 
 {% endif %}
 {% include "footer.html" %}
