@@ -3,22 +3,22 @@
 {% if msg %}
     <h3 class="h3">{{ msg }}</h3>
 
-    {#    <table class="table">#}
-    {#        <thead class="thead-light">#}
-    {#        <tr>#}
-    {#            <th scope="col" class="centerTableCol">First Name</th>#}
-    {#            <th scope="col" class="centerTableCol">Last Name</th>#}
-    {#            <th scope="col" class="centerTableCol">Description</th>#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {#        <tbody>#}
-    {#        <tr>#}
-    {#            <td class="centerTableCol">{{ modified_person.name }}</td>#}
-    {#            <td class="centerTableCol">{{ modified_person.surname }}</td>#}
-    {#            <td class="personDescription">{{ modified_person.description }}</td>#}
-    {#        </tr>#}
-    {#        </tbody>#}
-    {#    </table>#}
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">First Name</th>
+            <th scope="col" class="centerTableCol">Last Name</th>
+            <th scope="col" class="centerTableCol">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="centerTableCol">{{ modified_person.name }}</td>
+            <td class="centerTableCol">{{ modified_person.surname }}</td>
+            <td class="personDescription">{{ modified_person.description }}</td>
+        </tr>
+        </tbody>
+    </table>
 
 {% else %}
 
@@ -43,7 +43,6 @@
             <label>Description</label>
             <input type="text" name="description" value="{{ modified_person.description }}" class="form-control">
         </div>
-        <br>
         <button type="submit" class="btn btn-warning">Modify Person!</button>
     </form>
 
@@ -74,18 +73,52 @@
             <input type="text" name="city" maxlength="64" value="{{ address.city }}"
                    class="form-control shortFormsFields ">
         </div>
-        <br>
         <button type="submit" class="btn btn-warning">Modify Address!</button>
-         </form>
-        <a href="/delete/{{ address.id }}">
-            <button class="btn btn-danger">Delete Address!</button>
-        </a>
-
+    </form>
+    <a href="/delete/{{ address.id }}">
+        <button class="btn btn-danger">Delete Address!</button>
+    </a>
     <br>
-
+    <hr>
     <h4 class="h4">Telephone Numbers:</h4>
+    <hr>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">Telephone Number</th>
+            <th scope="col" class="centerTableCol">Type</th>
+            <th scope="col" class="centerTableCol">Modify</th>
+            <th scope="col" class="centerTableCol">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form action="/modify_tel/{{ tel.id }}" method="post">
+                {% csrf_token %}
+                <td class="centerTableCol">
+                    <input type="number" name="phone_number" min="0" value="{{ tel.phone_number }}"
+                           class="form-control shortFormsFields ">
+                </td>
+                <td class="centerTableCol">
+                    <select name="phone_type" class="form-control">
+                        {#add checked#}
+                        <option value="1">Work</option>
+                        <option value="2">Home</option>
+                        <option value="3">Private</option>
+                    </select>
+                </td>
+                <td class="centerTableCol">
+                    <button type="submit" class="btn btn-warning">Modify Phone!</button>
+                </td>
+            </form>
+            <td class="centerTableCol"><a href="/delete_tel/">
+                <button class="btn btn-danger">Delete Phone!</button>
+            </a></td>
+        </tr>
+        </tbody>
+    </table>
+{#ggg#}
 
-    <p>add later .....</p>
     <h3 class="h3">email addresses:</h3>
     <p>add later .....</p>
 
