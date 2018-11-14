@@ -372,8 +372,8 @@ def show_all_groups_view(request):
     if request.method == "GET":
 
         groups = Groups.objects.all()
-        group_users = groups.person_set.all()
+        # group_users = groups.person_set.all()
 
-        ctx = {"groups": groups, "group_users": group_users}
+        ctx = {"groups": groups}
 
         return render(request, "show_all_groups.html", ctx)

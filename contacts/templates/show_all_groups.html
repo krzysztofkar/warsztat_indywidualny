@@ -13,7 +13,7 @@
         <tbody>
         <tr>
             <td class="centerTableCol"><p>
-                {% for usr in group_users %}
+                {% for usr in gr.person.all %}
                     {{ usr.name }}  {{ usr.surname }}
                 {% endfor %}
             </p></td>
@@ -21,5 +21,5 @@
     {% endfor %}
     </tbody>
 </table>
-
+{% endif %}
 {% include "footer.html" %}
