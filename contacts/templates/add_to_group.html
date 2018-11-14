@@ -1,0 +1,38 @@
+{% include  "header.html" %}
+
+{% if msg %}
+    <h3 class="h3">{{ msg }}</h3>
+
+{#    <table class="table">#}
+{#        <thead class="thead-light">#}
+{#        <tr>#}
+{#            <th scope="col" class="centerTableCol"></th>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        <tr>#}
+{#            <td class="centerTableCol">{{ group.name }}</td>#}
+{#        </tr>#}
+{#        </tbody>#}
+{#    </table>#}
+
+{% else %}
+
+    <h3 class="h3">Add {{ user.name }} {{ user.surname }} to Group:</h3>
+    <form action="/add_to_group/{{ user.id }}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Select Groups:</label>
+            <select multiple class="form-control" name="groups">
+                {% for gr in groups %}
+                <option value="{{ gr.id }}">{{ gr.name }}</option>
+                {% endfor %}
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add to Group</button>
+    </form>
+{% endif %}
+
+{% include "footer.html" %}

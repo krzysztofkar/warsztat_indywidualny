@@ -9,6 +9,7 @@
         <tr>
             <th scope="col" class="centerTableCol">Surname</th>
             <th scope="col" class="centerTableCol">Name</th>
+            <th scope="col" class="centerTableCol">Groups</th>
             <th scope="col" class="centerTableCol">Modify</th>
             <th scope="col" class="centerTableCol">Delete</th>
         </tr>
@@ -18,6 +19,11 @@
             <tr>
                 <td><a href="/show_person_details/{{ user.id }}">{{ user.surname }}</a></td>
                 <td><a href="/show_person_details/{{ user.id }}">{{ user.name }}</a></td>
+                <td>
+                     <td class="centerTableCol">
+                    <a href="/add_to_group/{{ user.id }}"><button class="btn btn-primary">Add to Group</button>
+                </td>
+                </td>
                 <td class="centerTableCol">
                     <a href="/modify/{{ user.id }}"><button class="btn btn-warning">Modify</button>
                 </td>
