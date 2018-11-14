@@ -293,6 +293,16 @@ def show_user_details_view(request, id):
 
         if address_id is None:
             address = None
+            phone = person.phone_set.all()
+            email = person.email_set.all()
+
+            ctx = {"person": person,
+                   "address": address,
+                   "phone": phone,
+                   "email": email,
+                   }
+
+            return render(request, "show_user_details.html", ctx)
 
         address = Address.objects.get(id=address_id)
 

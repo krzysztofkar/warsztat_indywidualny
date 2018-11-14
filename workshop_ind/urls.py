@@ -29,7 +29,7 @@ urlpatterns = [
 
     re_path(r'^modify/(?P<id>[0-9]+)$', modify_person_view),
     re_path(r'^delete_person/(?P<id>[0-9]+)$', delete_person_view),
-    re_path(r'^show_user_details/(?P<id>[0-9]+)$', show_user_details_view),
+    re_path(r'^show_person_details/(?P<id>[0-9]+)$', show_user_details_view),
 
     re_path(r'^modify_address/(?P<id>[0-9]+)$', modify_address_view),
     re_path(r'^delete/(?P<id>[0-9]+)$', delete_address_view),
