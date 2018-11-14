@@ -118,9 +118,9 @@
     </tr>
     </thead>
     <tbody>
-    {% for tel_number in tel %}
+    {% for tel_number in phone_number %}
     <tr>
-        <form action="/modify_tel/{{ tel.id }}" method="post">
+        <form action="/modify_phone/{{ tel_number.id }}" method="post">
             {% csrf_token %}
             <td class="centerTableCol">
                 <input type="number" name="phone_number" min="0" value="{{ tel_number.phone_number }}"
@@ -141,12 +141,11 @@
                 <button type="submit" class="btn btn-warning">Modify Phone!</button>
             </td>
         </form>
-        <td class="centerTableCol"><a href="/delete_tel/">
+        <td class="centerTableCol"><a href="/delete_phone/{{ tel_number.id }}">
             <button class="btn btn-danger">Delete Phone!</button>
         </a></td>
     </tr>
     {% endfor %}
-{#{% endif %}#}
 </tbody>
 </table>
 <br>
