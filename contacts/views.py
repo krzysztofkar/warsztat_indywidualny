@@ -60,10 +60,12 @@ def modify_person_view(request, id):
 
 
         address = Address.objects.get(pk=address_id)
+        phone_number = Phone.objects.filter(person_id=id)
 
         ctx = {"modified_person": modified_person,
 
                "address": address,
+               "phone_number": phone_number,
 
                }
 
@@ -152,3 +154,13 @@ def add_phone_view(request, id):
 
         ctx = {"phone_types": phone_types}
         return render(request, "modify_person.html", ctx)
+
+# def modify_phone_view(request, id):
+#
+#     if request.method == "POST":
+#
+#         phone_number = request.POST.get('phone_number')
+#         phone_type = request.POST.get('phone_type')
+
+
+
