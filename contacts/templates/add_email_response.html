@@ -1,0 +1,24 @@
+{% include  "header.html" %}
+
+{% if msg %}
+    <h3 class="h3">{{ msg }}</h3>
+    <table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col" class="centerTableCol">Email</th>
+        <th scope="col" class="centerTableCol">Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td class="centerTableCol">{{ emails.email }}</td>
+    <td class="centerTableCol">{{ emails.get_email_type_display}}</td>
+        </tr>
+        </tbody>
+        </table>
+        {% else %}
+    Nothing here .......!!!! Check code!
+
+{% endif %}
+
+{% include "footer.html" %}

@@ -1,0 +1,35 @@
+{% include  "header.html" %}
+{% if msg %}
+
+{% else %}
+
+    <h3 class="h3 h3Colors">All Users:</h3>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">Surname</th>
+            <th scope="col" class="centerTableCol">Name</th>
+            <th scope="col" class="centerTableCol">Modify</th>
+            <th scope="col" class="centerTableCol">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.name }}</td>
+                <td class="centerTableCol">
+                    <a href="/modify/{{ user.id }}"><button class="btn btn-warning">Modify</button>
+                </td>
+                <td class="centerTableCol">
+                    <a href="/delete_person/{{ user.id }}">
+                        <button class="btn btn-danger">Delete!</button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endif %}
+{% include "footer.html" %}
