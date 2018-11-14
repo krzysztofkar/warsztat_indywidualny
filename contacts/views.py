@@ -137,13 +137,13 @@ def add_address_view(request, id):
 
         return render(request, "add_address_response.html", ctx)
 
+
 def add_phone_view(request, id):
 
     if request.method == "POST":
 
         phone_number = request.POST.get("phone_number")
         phone_type = request.POST.get("phone_type")
-
 
         new_phone = Phone.objects.create(phone_number=phone_number, phone_type=phone_type, person_id=id)
 
@@ -152,20 +152,40 @@ def add_phone_view(request, id):
 
         return request(request, "add_phone_response.html", ctx)
 
-    # if request.method == "GET":
 
-        # phone_types = Phone.PHONE_TYPES
-        # print("PHONY", phone_types)
+def modify_phone_view(request, id):
 
-        # ctx = {"phone_types": phone_types}
-        # return render(request, "modify_person.html", {})
+    if request.method == "POST":
 
-# def modify_phone_view(request, id):
-#
-#     if request.method == "POST":
-#
-#         phone_number = request.POST.get('phone_number')
-#         phone_type = request.POST.get('phone_type')
+        phone_number = request.POST.get('phone_number')
+        phone_type = request.POST.get('phone_type')
+
+        modified_phone = Phone.objects.get(pk=id)
+
+        modified_phone.phone_number = phone_number
+        modified_phone.phone_type = phone_type
+        modified_phone.save()
+
+        msg = "Phone modified!"
+        ctx = {'msg': msg}
+
+        return render(request, "modify_phone_response.html", ctx)
+
+
+def delete_phone_view(request, id):
+
+    if request.method == "POST":
+
+        phone_to_delete = Phone.objects.get(pk=id)
+        phone_to_delete.delete()
+
+        msg = "Phone deleted!"
+        ctx = {"msg": msg}
+
+        return render(request, "delete_phone_response.html", ctx)
+
+
+
 
 
 
