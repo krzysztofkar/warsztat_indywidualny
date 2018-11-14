@@ -277,7 +277,33 @@ def show_all_users_view(request):
 
     if request.method == "GET":
 
-        users = Person.objects.all().order_by('surname').order_by('name')
+        users = Person.objects.all().order_by('surname', 'name')
+
         ctx = {"users": users}
 
         return render(request, "show_all_users.html", ctx)
+
+
+def show_user_details_view(request, id):
+
+    if request.method == "GET":
+
+        person = Person.objects.get(pk=id)
+        address_id = person.address_id
+
+        if address_id is None:
+            address = None
+
+        address = Address.objects.get(id=address_id)
+
+        phone = person.phone_set.all()
+        email = person.email_set.all()
+
+        ctx = {"person": person,
+               "address": address,
+               "phone": phone,
+               "email": email,
+        }
+
+        return render(request, "show_user_details.html", ctx)
+
