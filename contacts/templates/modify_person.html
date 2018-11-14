@@ -105,78 +105,85 @@
         <br>
         <hr>
     {% endif %}
+
     <h4 class="h4">Telephone Numbers:</h4>
     <hr>
     <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Telephone Number</th>
-            <th scope="col" class="centerTableCol">Type</th>
-            <th scope="col" class="centerTableCol">Modify</th>
-            <th scope="col" class="centerTableCol">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <form action="/modify_tel/{{ tel.id }}" method="post">
-                {% csrf_token %}
-                <td class="centerTableCol">
-                    <input type="number" name="phone_number" min="0" value="{{ tel.phone_number }}"
-                           class="form-control">
-                </td>
-                <td class="centerTableCol">
-                    <select name="phone_type" class="form-control">
-                        {{ tel.phone_type }}
-                        <option value="1">Work</option>
-                        <option value="2">Home</option>
-                        <option value="3">Private</option>
-                    </select>
-                </td>
-                <td class="centerTableCol">
-                    <button type="submit" class="btn btn-warning">Modify Phone!</button>
-                </td>
-            </form>
-            <td class="centerTableCol"><a href="/delete_tel/">
-                <button class="btn btn-danger">Delete Phone!</button>
-            </a></td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-        <h4 class="h4">Add new telephone number</h4>
-    <hr>
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Telephone Number</th>
-            <th scope="col" class="centerTableCol">Type</th>
-            <th scope="col" class="centerTableCol">Add New Phone</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <form action=""/add_phone/{{ modified_person.id }}" method="post">
-                {% csrf_token %}
-                <td class="centerTableCol">
-                    <input type="number" name="phone_number" min="0" class="form-control">
-                </td>
-                <td class="centerTableCol">
-                    <select name="phone_type" class="form-control">
-                        <option value="1">Work</option>
-                        <option value="2">Home</option>
-                        <option value="3">Private</option>
-                    </select>
-                </td>
-                <td class="centerTableCol">
-                    <button type="submit" class="btn btn-primary">Add Phone</button>
-                </td>
-            </form>
-        </tr>
-        </tbody>
-    </table>
+    <thead class="thead-light">
+    <tr>
+        <th scope="col" class="centerTableCol">Telephone Number</th>
+        <th scope="col" class="centerTableCol">Type</th>
+        <th scope="col" class="centerTableCol">Modify</th>
+        <th scope="col" class="centerTableCol">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tel_number in tel %}
+    <tr>
+        <form action="/modify_tel/{{ tel.id }}" method="post">
+            {% csrf_token %}
+            <td class="centerTableCol">
+                <input type="number" name="phone_number" min="0" value="{{ tel_number.phone_number }}"
+                       class="form-control">
+            </td>
+            <td class="centerTableCol">
+                <select name="phone_type" class="form-control">
+                    {% for dic_value in phone_types %}
+                        {% if dic_value.1 == tel_number.phone_type %}
+                            <option value="{{ dic_value.0 }}">{{ dic_value.1 }} selected</option>
+                        {% else %}
+                            <option value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+            <td class="centerTableCol">
+                <button type="submit" class="btn btn-warning">Modify Phone!</button>
+            </td>
+        </form>
+        <td class="centerTableCol"><a href="/delete_tel/">
+            <button class="btn btn-danger">Delete Phone!</button>
+        </a></td>
+    </tr>
+    {% endfor %}
+{#{% endif %}#}
+</tbody>
+</table>
+<br>
+<h4 class="h4">Add new telephone number</h4>
+<hr>
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col" class="centerTableCol">Telephone Number</th>
+        <th scope="col" class="centerTableCol">Type</th>
+        <th scope="col" class="centerTableCol">Add New Phone</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <form action="/add_phone/{{ modified_person.id }}" method="post">
+            {% csrf_token %}
+            <td class="centerTableCol">
+                <input type="number" name="phone_number" min="0" class="form-control">
+            </td>
+            <td class="centerTableCol">
+                <select name="phone_type" class="form-control">
+                    <option value="1">Work</option>
+                    <option value="2">Home</option>
+                    <option value="3">Private</option>
+                </select>
+            </td>
+            <td class="centerTableCol">
+                <button type="submit" class="btn btn-primary">Add Phone</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
 
-    <h3 class="h3">email addresses:</h3>
-    <p>add later .....</p>
+<h3 class="h3">email addresses:</h3>
+<p>add later .....</p>
 
 {% endif %}
 {% include "footer.html" %}
