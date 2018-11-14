@@ -122,11 +122,11 @@
                 {% csrf_token %}
                 <td class="centerTableCol">
                     <input type="number" name="phone_number" min="0" value="{{ tel.phone_number }}"
-                           class="form-control shortFormsFields ">
+                           class="form-control">
                 </td>
                 <td class="centerTableCol">
                     <select name="phone_type" class="form-control">
-                        {#add checked#}
+                        {{ tel.phone_type }}
                         <option value="1">Work</option>
                         <option value="2">Home</option>
                         <option value="3">Private</option>
@@ -142,7 +142,38 @@
         </tr>
         </tbody>
     </table>
-    {#ggg#}
+    <br>
+        <h4 class="h4">Add new telephone number</h4>
+    <hr>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" class="centerTableCol">Telephone Number</th>
+            <th scope="col" class="centerTableCol">Type</th>
+            <th scope="col" class="centerTableCol">Add New Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form action=""/add_phone/{{ modified_person.id }}" method="post">
+                {% csrf_token %}
+                <td class="centerTableCol">
+                    <input type="number" name="phone_number" min="0" class="form-control">
+                </td>
+                <td class="centerTableCol">
+                    <select name="phone_type" class="form-control">
+                        <option value="1">Work</option>
+                        <option value="2">Home</option>
+                        <option value="3">Private</option>
+                    </select>
+                </td>
+                <td class="centerTableCol">
+                    <button type="submit" class="btn btn-primary">Add Phone</button>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
 
     <h3 class="h3">email addresses:</h3>
     <p>add later .....</p>
