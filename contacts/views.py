@@ -372,7 +372,7 @@ def show_all_groups_view(request):
     if request.method == "GET":
 
         groups = Groups.objects.all()
-        group_users = Groups.person.all()
+        group_users = groups.person_set.all()
 
         ctx = {"groups": groups, "group_users": group_users}
 
