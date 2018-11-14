@@ -331,6 +331,7 @@ def add_group_view(request):
         return render(request, "add_group.html", ctx)
 
     elif request.method == "GET":
+
         return render(request, "add_group.html", {})
 
 
@@ -339,16 +340,17 @@ def add_to_group_view(request, id):
     if request.method == "POST":
 
         user = Person.objects.get(pk=id)
-        groups = request.POST.get('groups')
+        groups = request.POST.getlist('groups')
 
         for i in groups:
-            i.person.add(user)
-            i.save()
+            group = Groups.objects.get(id=i)
+            group.person.add(user)
+            group.save()
 
-        # group.person.add(user)
-        # group.save()
+        msg = "added to Groups:"
 
-        ctx = {"user": user, "group": group}
+        ctx = {"user": user, "groups": groups, "msg": msg}
+
         return render(request, "add_to_group.html", ctx)
 
 
@@ -356,7 +358,8 @@ def add_to_group_view(request, id):
 
         user = Person.objects.get(pk=id)
         groups = Groups.objects.all()
-        ctx = {"groups": groups, "user": user }
+        user_groups = user.groups_set.all()
+
+        ctx = {"groups": groups, "user": user, "user_groups": user_groups}
 
         return render(request, "add_to_group.html", ctx)
-
