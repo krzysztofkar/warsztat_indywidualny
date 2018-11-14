@@ -44,7 +44,7 @@ def modify_person_view(request, id):
 
         ctx = {"msg": msg, "modified_person": modified_person}
 
-        return render(request, "modify_person.html", ctx)
+        return render(request, "modify_person_response.html", ctx)
 
     elif request.method == "GET":
 
@@ -71,6 +71,7 @@ def modify_person_view(request, id):
 
 
 def modify_address_view(request, id):
+
     if request.method == "POST":
 
         id = int(id)
@@ -93,7 +94,7 @@ def modify_address_view(request, id):
                "address": modified_address
                }
 
-        return render(request, "modify_person.html", ctx)
+        return render(request, "modify_address_response.html", ctx)
 
 
 def delete_address_view(request, id):
@@ -109,4 +110,4 @@ def delete_address_view(request, id):
         ctx = {"msg": msg,
                }
 
-        return render(request, "modify_person.html", ctx)
+        return render(request, "delete_address_response.html", ctx)
