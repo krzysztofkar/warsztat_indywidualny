@@ -16,8 +16,8 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.surname }}</td>
-                <td>{{ user.name }}</td>
+                <td><a href="/show_person_details/{{ user.id }}">{{ user.surname }}</a></td>
+                <td><a href="/show_person_details/{{ user.id }}">{{ user.name }}</a></td>
                 <td class="centerTableCol">
                     <a href="/modify/{{ user.id }}"><button class="btn btn-warning">Modify</button>
                 </td>
