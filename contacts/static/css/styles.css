@@ -67,14 +67,15 @@ table {
     text-align: center;
 }
 
-.h4 {
+.h3Colors {
+    background-color: #004a99;
+    color: white;
+    padding: 10px 15px;
+}
+
+.h4Colors {
     background-color: #0063cc;
     color: white;
     padding: 10px 15px;
 }
 
-.h3 {
-    background-color: #004a99;
-    color: white;
-    padding: 10px 15px;
-}

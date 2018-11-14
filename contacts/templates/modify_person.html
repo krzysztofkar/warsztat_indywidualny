@@ -1,12 +1,12 @@
 {% include  "header.html" %}
 
 {% if msg %}
-    <h3 class="h3">{{ msg }}</h3>
+    <h3 class="h3 h3Colors">{{ msg }}</h3>
 
 {% else %}
 
-    <h3 class="h3">Modify Person data:</h3>
-    <h4 class="h4">Basic information:</h4>
+    <h3 class="h3 h3Colors">Modify Person data:</h3>
+    <h4 class="h4 h4Colors">Basic information:</h4>
 
     <form action="" method="post">
         {% csrf_token %}
@@ -27,7 +27,7 @@
         <button type="submit" class="btn btn-warning">Modify Person!</button>
     </form>
     <br>
-    <h4 class="h4">Address:</h4>
+    <h4 class="h4 h4Colors">Address:</h4>
     {% if address %}
         <form action="/modify_address/{{ address.id }}" method="post">
             {% csrf_token %}
@@ -84,7 +84,7 @@
         <hr>
     {% endif %}
 
-    <h4 class="h4">Telephone Numbers:</h4>
+    <h4 class="h4 h4Colors">Telephone Numbers:</h4>
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -158,7 +158,7 @@
         </tbody>
     </table>
 
-    <h4 class="h4">Email Addresses:</h4>
+    <h4 class="h4 h4Colors">Email Addresses:</h4>
 <table class="table">
         <thead class="thead-light">
         <tr>
@@ -178,7 +178,7 @@
                                class="form-control">
                     </td>
                     <td class="centerTableCol">
-                        <select name="phone_type" class="form-control">
+                        <select name="email_type" class="form-control">
                             {% for dic_value in email_types %}
                                 {% if dic_value.0 ==  email_address.email_type %}
                                     <option selected value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
@@ -192,7 +192,7 @@
                         <button type="submit" class="btn btn-warning">Modify Email!</button>
                     </td>
                 </form>
-                <td class="centerTableCol"><a href="/delete_phone/{{  email_address.id  }}">
+                <td class="centerTableCol"><a href="/delete_email/{{  email_address.id  }}">
                     <button class="btn btn-danger">Delete Email!</button>
                 </a></td>
             </tr>
@@ -216,7 +216,7 @@
             <form action="/add_email/{{ modified_person.id }}" method="post">
                 {% csrf_token %}
                 <td class="centerTableCol">
-                    <input type="number" name="email" min="0" class="form-control">
+                    <input type="text" name="email" min="0" class="form-control">
                 </td>
                 <td class="centerTableCol">
                     <select name="email_type" class="form-control">
