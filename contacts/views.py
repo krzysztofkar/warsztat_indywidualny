@@ -67,14 +67,13 @@ def modify_person_view(request, id):
         emails = Email.objects.filter(person_id=id)
         email_types = Email.EMAIL_TYPES
 
-        ctx = {"modified_person": modified_person,
-
-               "address": address,
-               "phone_number": phone_number,
-               "phone_types": phone_types,
-
-                "emails": emails,
-               "email_types": email_types,
+        ctx = {
+            "modified_person": modified_person,
+            "address": address,
+            "phone_number": phone_number,
+            "phone_types": phone_types,
+            "emails": emails,
+            "email_types": email_types,
 
                }
 
@@ -140,7 +139,7 @@ def add_address_view(request, id):
         modified_person.save()
 
         msg = "New Address Added"
-        ctx = {'msg': msg, "address": new_address}
+        ctx = {'msg': msg, "address": new_address, "modified_person": modified_person}
 
         return render(request, "add_address_response.html", ctx)
 
@@ -202,7 +201,7 @@ def add_email_view(request, id):
         email = request.POST.get("email")
         email_type = request.POST.get("email_type")
 
-        new_mail = Phone.objects.create(email=email, email_type=email_type, person_id=id)
+        new_mail = Email.objects.create(email=email, email_type=email_type, person_id=id)
 
         msg = "New Mail Added!"
         ctx = {"msg": msg}
