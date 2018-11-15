@@ -81,4 +81,5 @@ table {
 
 #groupsSelection{
     width: 400px;
+    min-height: 100px;
 }
