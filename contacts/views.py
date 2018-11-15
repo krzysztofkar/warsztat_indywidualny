@@ -437,3 +437,31 @@ def delete_person_from_group_view(request, id, person_id):
                }
 
         return render(request, "standard_response.html", ctx)
+
+def modify_group_view(request, id):
+
+    if request.method == "POST":
+
+        new_group_name = request.POST.get('name')
+
+        modified_group = Groups.objects.get(pk=id)
+
+        modified_group.name = new_group_name
+        modified_group.save()
+
+        modified_group = Groups.objects.get(pk=id)
+
+        msg = "Group modified!"
+        ctx = {'msg': msg,
+               "group": modified_group
+               }
+
+        return render(request, "modify_group.html", ctx)
+
+    if request.method == "GET":
+
+        groups = Groups.objects.all()
+
+        ctx = {"group": groups}
+
+        return render(request, "modify_group.html", ctx)
