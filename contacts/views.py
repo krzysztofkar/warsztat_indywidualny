@@ -390,7 +390,10 @@ def group_search_view(request):
 
         search_user = Person.objects.filter(name__contains=name).filter(surname__contains=surname)
 
+        msg = 'Search results.'
+
         ctx = {
+            'msg': msg,
             'user': search_user,
         }
 
