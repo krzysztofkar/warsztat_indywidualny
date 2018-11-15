@@ -25,10 +25,12 @@
             <input type="text" name="description" value="{{ modified_person.description }}" class="form-control">
         </div>
         <button type="submit" class="btn btn-warning">Modify Person!</button>
+        <a href="/delete_person/{{ modified_person.id }}">
+            <button type="button" class="btn btn-danger">Delete Person!</button>
+        </a>
+
     </form>
-    <a href="/delete_person/{{ modified_person.id }}">
-        <button class="btn btn-danger">Delete Person!</button>
-    </a>
+
     <br><br>
     <h4 class="h4 h4Colors">Address:</h4>
     {% if address %}
@@ -56,10 +58,11 @@
                        class="form-control shortFormsFields ">
             </div>
             <button type="submit" class="btn btn-warning">Modify Address!</button>
+            <a href="/delete/{{ address.id }}">
+                <button type="button" class="btn btn-danger">Delete Address!</button>
+            </a>
         </form>
-        <a href="/delete/{{ address.id }}">
-            <button class="btn btn-danger">Delete Address!</button>
-        </a>
+
         <br><br>
     {% else %}
         <form action="/add_address/{{ modified_person.id }}" method="post">
@@ -89,49 +92,49 @@
 
     <h4 class="h4 h4Colors">Telephone Numbers:</h4>
     {% if phone_number %}
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Telephone Number</th>
-            <th scope="col" class="centerTableCol">Type</th>
-            <th scope="col" class="centerTableCol">Modify</th>
-            <th scope="col" class="centerTableCol">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for tel_number in phone_number %}
+        <table class="table">
+            <thead class="thead-light">
             <tr>
-                <form action="/modify_phone/{{ tel_number.id }}" method="post">
-                    {% csrf_token %}
-                    <td class="centerTableCol">
-                        <input type="number" name="phone_number" min="0" value="{{ tel_number.phone_number }}"
-                               class="form-control">
-                    </td>
-                    <td class="centerTableCol">
-                        <select name="phone_type" class="form-control">
-                            {% for dic_value in phone_types %}
-                                {% if dic_value.0 ==  tel_number.phone_type %}
-                                    <option selected value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
-                                {% else %}
-                                    <option value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td class="centerTableCol">
-                        <button type="submit" class="btn btn-warning">Modify Phone!</button>
-                    </td>
-                </form>
-                <td class="centerTableCol"><a href="/delete_phone/{{ tel_number.id }}">
-                    <button class="btn btn-danger">Delete Phone!</button>
-                </a></td>
+                <th scope="col" class="centerTableCol">Telephone Number</th>
+                <th scope="col" class="centerTableCol">Type</th>
+                <th scope="col" class="centerTableCol">Modify</th>
+                <th scope="col" class="centerTableCol">Delete</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-        {% else %}
+            </thead>
+            <tbody>
+            {% for tel_number in phone_number %}
+                <tr>
+                    <form action="/modify_phone/{{ tel_number.id }}" method="post">
+                        {% csrf_token %}
+                        <td class="centerTableCol">
+                            <input type="number" name="phone_number" min="0" value="{{ tel_number.phone_number }}"
+                                   class="form-control">
+                        </td>
+                        <td class="centerTableCol">
+                            <select name="phone_type" class="form-control">
+                                {% for dic_value in phone_types %}
+                                    {% if dic_value.0 ==  tel_number.phone_type %}
+                                        <option selected value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
+                                    {% else %}
+                                        <option value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td class="centerTableCol">
+                            <button type="submit" class="btn btn-warning">Modify Phone!</button>
+                        </td>
+                    </form>
+                    <td class="centerTableCol"><a href="/delete_phone/{{ tel_number.id }}">
+                        <button class="btn btn-danger">Delete Phone!</button>
+                    </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
         <p>No telephone numbers defined</p>
-        {% endif %}
+    {% endif %}
     <hr>
     <h5 class="h5">Add new telephone number</h5>
     <hr>
@@ -167,49 +170,49 @@
 
     <h4 class="h4 h4Colors">Email Addresses:</h4>
     {% if emails %}
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Email Address</th>
-            <th scope="col" class="centerTableCol">Type</th>
-            <th scope="col" class="centerTableCol">Modify</th>
-            <th scope="col" class="centerTableCol">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for email_address in emails %}
+        <table class="table">
+            <thead class="thead-light">
             <tr>
-                <form action="/modify_email/{{ email_address.id }}" method="post">
-                    {% csrf_token %}
-                    <td class="centerTableCol">
-                        <input type="text" name="email" min="0" value="{{ email_address.email }}"
-                               class="form-control">
-                    </td>
-                    <td class="centerTableCol">
-                        <select name="email_type" class="form-control">
-                            {% for dic_value in email_types %}
-                                {% if dic_value.0 ==  email_address.email_type %}
-                                    <option selected value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
-                                {% else %}
-                                    <option value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td class="centerTableCol">
-                        <button type="submit" class="btn btn-warning">Modify Email!</button>
-                    </td>
-                </form>
-                <td class="centerTableCol"><a href="/delete_email/{{ email_address.id }}">
-                    <button class="btn btn-danger">Delete Email!</button>
-                </a></td>
+                <th scope="col" class="centerTableCol">Email Address</th>
+                <th scope="col" class="centerTableCol">Type</th>
+                <th scope="col" class="centerTableCol">Modify</th>
+                <th scope="col" class="centerTableCol">Delete</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-        {% else %}
+            </thead>
+            <tbody>
+            {% for email_address in emails %}
+                <tr>
+                    <form action="/modify_email/{{ email_address.id }}" method="post">
+                        {% csrf_token %}
+                        <td class="centerTableCol">
+                            <input type="email" name="email" min="0" value="{{ email_address.email }}"
+                                   class="form-control">
+                        </td>
+                        <td class="centerTableCol">
+                            <select name="email_type" class="form-control">
+                                {% for dic_value in email_types %}
+                                    {% if dic_value.0 ==  email_address.email_type %}
+                                        <option selected value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
+                                    {% else %}
+                                        <option value="{{ dic_value.0 }}">{{ dic_value.1 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td class="centerTableCol">
+                            <button type="submit" class="btn btn-warning">Modify Email!</button>
+                        </td>
+                    </form>
+                    <td class="centerTableCol"><a href="/delete_email/{{ email_address.id }}">
+                        <button class="btn btn-danger">Delete Email!</button>
+                    </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
         <p>No emails defined for this user</p>
-        {% endif %}
+    {% endif %}
     <hr>
     <h5 class="h5">Add new email address</h5>
     <hr>
@@ -245,31 +248,32 @@
 
     <h4 class="h4 h4Colors">User Groups:</h4>
     {% if modified_person.groups_set.all %}
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col">Group</th>
-            <th scope="col" class="tdAlignRight">Remove from Group</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for gr in modified_person.groups_set.all %}
+        <table class="table">
+            <thead class="thead-light">
             <tr>
-                <td>{{ gr.name }}</td>
-                <td class="tdAlignRight"><a href="/delete_user_from_group/{{ gr.id }}/{{ modified_person.id }}">
+                <th scope="col">Group</th>
+                <th scope="col" class="tdAlignRight">Remove from Group</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for gr in modified_person.groups_set.all %}
+                <tr>
+                    <td>{{ gr.name }}</td>
+                    <td class="tdAlignRight"><a href="/delete_user_from_group/{{ gr.id }}/{{ modified_person.id }}">
                         <button class="btn btn-danger">Remove</button>
                     </a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-        {% else %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
         <p>User is not a member of any Groups</p>
-        {% endif %}
+    {% endif %}
     <hr>
     <h5 class="h5">Modify User Group Assigment</h5>
     <hr>
-     <a href="/add_to_group/{{ modified_person.id }}">
-                        <button class="btn btn-primary">Group Assign</button></a>
+    <a href="/add_to_group/{{ modified_person.id }}">
+        <button class="btn btn-primary">Group Assign</button>
+    </a>
 {% endif %}
 {% include "footer.html" %}
