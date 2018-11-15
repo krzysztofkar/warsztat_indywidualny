@@ -1,0 +1,43 @@
+{% include  "header.html" %}
+
+{% if msg %}
+    <h4 style="h4">{{ msg }}</h4>
+
+{% else %}
+    <h3 class="h3 h3Colors">Modify Group: {{ group.name }}</h3>
+
+    <form action="/modify_group/{{ group.id }}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Group Name</label>
+            <input type="text" name="name" maxlength="64" value="{{ group.name }}"
+                   class="form-control shortFormsFields">
+        </div>
+        <button type="submit" class="btn btn-warning">Modify Group!</button>
+    </form>
+    <hr>
+    {% if group.person.all %}
+        <table class="table">
+            <tbody>
+            <thead class="thead-light">
+            <th scope="col">User</th>
+            <th scope="col" style="text-align: right">Remove User from Group</th>
+            </thead>
+
+            {% for usr in group.person.all %}
+                <tr>
+                    <td>
+                        <a href="/show_person_details/{{ usr.id }}">{{ usr.name }} {{ usr.surname }}</a></td>
+                    <td class="tdAlignRight"><a href="/delete_user_from_group/{{ gr.id }}/{{ usr.id }}">
+                        <button class="btn btn-danger">Remove</button>
+                    </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No users in this Group</p>
+    {% endif %}
+
+{% endif %}
+{% include "footer.html" %}
