@@ -88,6 +88,7 @@
     {% endif %}
 
     <h4 class="h4 h4Colors">Telephone Numbers:</h4>
+    {% if phone_number %}
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -128,6 +129,9 @@
         {% endfor %}
         </tbody>
     </table>
+        {% else %}
+        <p>No telephone numbers defined</p>
+        {% endif %}
     <hr>
     <h5 class="h5">Add new telephone number</h5>
     <hr>
@@ -162,6 +166,7 @@
     </table>
 
     <h4 class="h4 h4Colors">Email Addresses:</h4>
+    {% if emails %}
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -202,7 +207,9 @@
         {% endfor %}
         </tbody>
     </table>
-    <br>
+        {% else %}
+        <p>No emails defined for this user</p>
+        {% endif %}
     <hr>
     <h5 class="h5">Add new email address</h5>
     <hr>
@@ -237,6 +244,7 @@
     </table>
 
     <h4 class="h4 h4Colors">User Groups:</h4>
+    {% if modified_person.groups_set.all %}
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -255,6 +263,9 @@
         {% endfor %}
         </tbody>
     </table>
+        {% else %}
+        <p>User is not a member of any Groups</p>
+        {% endif %}
     <hr>
     <h5 class="h5">Modify User Group Assigment</h5>
     <hr>
