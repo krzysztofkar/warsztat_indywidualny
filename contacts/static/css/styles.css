@@ -88,3 +88,7 @@ table {
     text-align: right;
     width: 100%;
 }
+.pGroupsHeader {
+    display: inline;
+    line-height: 40px;
+}
