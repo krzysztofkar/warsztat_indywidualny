@@ -83,3 +83,8 @@ table {
     width: 400px;
     min-height: 100px;
 }
+
+.tdAlignRight {
+    text-align: right;
+    width: 100%;
+}

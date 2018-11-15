@@ -2,25 +2,41 @@
 
 {% if msg %}
 {% else %}
-<h3 class="h3 h3Colors">All Groups</h3>
+    <h3 class="h3 h3Colors">All Groups</h3>
 
     {% for gr in groups %}
+        <h4 class="h4 h4Colors">
+                    <Table>
+            <tr>
+                <td >Group: {{ gr.name }}</td>
+                <td class="tdAlignRight"><a href="/delete_group/{{ gr.id }}">
+                    <button class="btn btn-danger">Delete Group!</button>
+                </a></td>
+
+            </tr>
+        </Table>
+
+
+        </h4>
         <table class="table">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Group: {{ gr.name }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td class="centerTableCol"><p>
-                {% for usr in gr.person.all %}
-                    {{ usr.name }}  {{ usr.surname }}<br>
-                {% endfor %}
-            </p></td>
-        </tr>
+            <tbody>
+            <thead class="thead-light">
+            <th scope="col">User</th>
+            <th scope="col">Remove from Group</th>
+            </thead>
+
+            {% for usr in gr.person.all %}
+                <tr>
+                <td>
+                    {{ usr.name }} {{ usr.surname }}</td>
+
+            <td><a href="/delete_user_from_group/{{ gr.id }}">
+                <button class="btn btn-danger">Remove User from Group!</button>
+            </a></td>
+            </tr>
+            {% endfor %}
             </tbody>
-</table>
+        </table>
     {% endfor %}
 
 {% endif %}
