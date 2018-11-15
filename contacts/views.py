@@ -427,10 +427,10 @@ def delete_person_from_group_view(request, id, person_id):
         id = int(id)
         person_id = int(person_id)
         group = Groups.objects.get(pk=id)
-        person_to_delete = group.objects.get(person_id=person_id)
+        person_to_delete = Person.objects.get(id=person_id)
         print(person_to_delete.name)
-        person_to_delete.remove()
-        
+        group.person.remove(person_to_delete)
+
         msg = "Person removed from group."
 
         ctx = {"msg": msg,
