@@ -1,6 +1,54 @@
 {% include  "header.html" %}
 {% if msg %}
     <h3 class="h3">{{ msg }}</h3>
+    {% if user %}
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col" class="centerTableCol">Surname</th>
+                <th scope="col" class="centerTableCol">Name</th>
+                <th scope="col" class="centerTableCol">City</th>
+                <th scope="col" class="centerTableCol">Groups</th>
+                <th scope="col" class="centerTableCol">Modify</th>
+                <th scope="col" class="centerTableCol">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td><a href="/show_person_details/{{ user.id }}">{{ user.surname }}</a></td>
+                    <td><a href="/show_person_details/{{ user.id }}">{{ user.name }}</a></td>
+                    <td>{{ user.address.city }}</td>
+                    <td>
+                        {% if user.groups_set.all %}
+                            {% for gr in user.groups_set.all %}
+                                {{ gr.name }} <br>
+                            {% endfor %}
+                        {% else %}
+                            Not assigned to any groups
+                        {% endif %}
+                    </td>
+                    <td class="centerTableCol">
+                        <a href="/add_to_group/{{ user.id }}">
+                            <button class="btn btn-primary">Group Assign</button>
+                    </td>
+                    <td class="centerTableCol">
+                        <a href="/modify/{{ user.id }}">
+                            <button class="btn btn-warning">Modify</button>
+                    </td>
+                    <td class="centerTableCol">
+                        <a href="/delete_person/{{ user.id }}">
+                            <button class="btn btn-danger">Delete!</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4 class="h4">Search didnt return any results.</h4>
+    {% endif %}
+
 
 {% else %}
     <h3 class="h3 h3Colors">Search</h3>
@@ -11,18 +59,16 @@
             <label>Name</label>
             <input type="text" name="name" maxlength="64" class="form-control">
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label>Surname</label>
             <input type="text" name="surname" maxlength="64" class="form-control">
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label>City</label>
             <input type="text" name="city" maxlength="64" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
-
-
 
 {% endif %}
 {% include "footer.html" %}
