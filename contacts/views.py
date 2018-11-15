@@ -402,3 +402,38 @@ def group_search_view(request):
     elif request.method == "GET":
 
         return render(request, 'group_search.html', {})
+
+
+def delete_group_view(request, id):
+
+    if request.method == "GET":
+
+        id = int(id)
+        group_to_delete = Groups.objects.get(pk=id)
+        group_to_delete.delete()
+
+        msg = "Group deleted!"
+
+        ctx = {"msg": msg,
+               }
+
+        return render(request, "standard_response.html", ctx)
+
+
+def delete_person_from_group_view(request, id, person_id):
+
+    if request.method == "GET":
+
+        id = int(id)
+        person_id = int(person_id)
+        group = Groups.objects.get(pk=id)
+        person_to_delete = group.objects.get(person_id=person_id)
+        print(person_to_delete.name)
+        person_to_delete.remove()
+        
+        msg = "Person removed from group."
+
+        ctx = {"msg": msg,
+               }
+
+        return render(request, "standard_response.html", ctx)

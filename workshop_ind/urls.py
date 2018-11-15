@@ -20,7 +20,7 @@ from django.urls import path, re_path
 from contacts.views import add_new_person_view, modify_person_view, modify_address_view, delete_address_view, \
     add_address_view, add_phone_view, modify_phone_view, delete_phone_view, add_email_view, modify_email_view, \
     delete_email_view, delete_person_view, show_all_users_view, show_user_details_view, add_group_view, \
-    add_to_group_view, show_all_groups_view, group_search_view
+    add_to_group_view, show_all_groups_view, group_search_view, delete_group_view, delete_person_from_group_view
 
 urlpatterns = [
 
@@ -48,5 +48,7 @@ urlpatterns = [
     path('add_group', add_group_view),
     re_path(r'^add_to_group/(?P<id>[0-9]+)$', add_to_group_view),
     path('show_all_groups', show_all_groups_view),
+    re_path(r'^delete_group/(?P<id>[0-9]+)$', delete_group_view),
+    re_path(r'^delete_user_from_group/(?P<id>[0-9]+)/(?P<person_id>[0-9]+)$', delete_person_from_group_view),
 
 ]
