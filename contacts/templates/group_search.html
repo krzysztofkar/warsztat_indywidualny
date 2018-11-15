@@ -9,6 +9,7 @@
                 <th scope="col" class="centerTableCol">Name</th>
                 <th scope="col" class="centerTableCol">City</th>
                 <th scope="col" class="centerTableCol">Groups</th>
+                <th scope="col" class="centerTableCol">Group Assigment</th>
                 <th scope="col" class="centerTableCol">Modify</th>
                 <th scope="col" class="centerTableCol">Delete</th>
             </tr>
@@ -51,21 +52,17 @@
 
 
 {% else %}
-    <h3 class="h3 h3Colors">Search</h3>
+    <h3 class="h3 h3Colors">User Search</h3>
 
     <form action="/group_search" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label>Name</label>
-            <input type="text" name="name" maxlength="64" class="form-control">
+            <input type="text" name="name" maxlength="64" class="form-control shortFormsFields">
         </div>
         <div class="form-group">
             <label>Surname</label>
-            <input type="text" name="surname" maxlength="64" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>City</label>
-            <input type="text" name="city" maxlength="64" class="form-control">
+            <input type="text" name="surname" maxlength="64" class="form-control shortFormsFields">
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
