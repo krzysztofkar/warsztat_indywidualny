@@ -12,12 +12,12 @@ class Person(models.Model):
 class Address(models.Model):
     city = models.CharField(max_length=64)
     street_name = models.CharField(max_length=64)
-    house_number = models.IntegerField()
-    flat_number = models.IntegerField(null=True)
+    house_number = models.CharField(max_length=6)
+    flat_number = models.CharField(max_length=6, null=True)
 
 
 class Phone(models.Model):
-    phone_number = models.IntegerField()
+    phone_number = models.BigIntegerField()
     PHONE_TYPES = (
         (1, "work"),
         (2, "home"),
