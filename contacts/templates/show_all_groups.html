@@ -1,42 +1,41 @@
 {% include  "header.html" %}
 
 {% if msg %}
+    <h4 style="h4">{{ msg }}</h4>
+
 {% else %}
     <h3 class="h3 h3Colors">All Groups</h3>
 
     {% for gr in groups %}
-        <h4 class="h4 h4Colors">
-                    <Table>
-            <tr>
-                <td >Group: {{ gr.name }}</td>
-                <td class="tdAlignRight"><a href="/delete_group/{{ gr.id }}">
-                    <button class="btn btn-danger">Delete Group!</button>
-                </a></td>
-
-            </tr>
-        </Table>
-
-
+        <h4 class="h4 h4Colors" style="height: 60px">
+            <p class="pGroupsHeader">Group: {{ gr.name }}</p>
+            <a href="/delete_group/{{ gr.id }}" style="float: right">
+                <button class="btn btn-danger">Delete Group!</button>
+            </a>
         </h4>
+       {% if gr.person.all %}
         <table class="table">
             <tbody>
             <thead class="thead-light">
             <th scope="col">User</th>
-            <th scope="col">Remove from Group</th>
+            <th scope="col" style="text-align: right">Remove User from Group</th>
             </thead>
 
             {% for usr in gr.person.all %}
                 <tr>
-                <td>
-                    {{ usr.name }} {{ usr.surname }}</td>
+                    <td>
+                        {{ usr.name }} {{ usr.surname }}</td>
 
-            <td><a href="/delete_user_from_group/{{ gr.id }}">
-                <button class="btn btn-danger">Remove User from Group!</button>
-            </a></td>
-            </tr>
+                    <td class="tdAlignRight"><a href="/delete_user_from_group/{{ gr.id }}/{{ usr.id }}">
+                        <button class="btn btn-danger">Remove</button>
+                    </a></td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
+        {% else %}
+           <p>No users in this Group</p>
+        {% endif %}
     {% endfor %}
 
 {% endif %}
