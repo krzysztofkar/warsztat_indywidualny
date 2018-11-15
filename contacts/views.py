@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from contacts.models import Person, Address, Phone, Email, Groups
 
 # Create your views here.
+
+
 def add_new_person_view(request):
 
     if request.method == "POST":
@@ -312,8 +314,8 @@ def show_user_details_view(request, id):
         ctx = {"person": person,
                "address": address,
                "phone": phone,
-               "email": email,
-        }
+               "email": email
+               }
 
         return render(request, "show_user_details.html", ctx)
 
@@ -367,6 +369,7 @@ def add_to_group_view(request, id):
 
         return render(request, "add_to_group.html", ctx)
 
+
 def show_all_groups_view(request):
 
     if request.method == "GET":
@@ -377,3 +380,18 @@ def show_all_groups_view(request):
         ctx = {"groups": groups}
 
         return render(request, "show_all_groups.html", ctx)
+
+
+def group_search_view(request):
+
+    if request.method == "POST":
+        search = request.POST.get('search')
+
+        Groups.objects.filter(person__name__contains=search)
+        Groups.objects.filter(person__surname__contains=search)
+
+            ctx = {
+
+            }
+
+            return render(request, 'group_search.html', ctx)
