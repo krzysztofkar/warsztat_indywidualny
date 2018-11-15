@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from contacts.models import Person, Address, Phone, Email, Groups
 
+
 # Create your views here.
 
 
 def add_new_person_view(request):
-
     if request.method == "POST":
 
         name = request.POST.get('name')
@@ -29,7 +29,6 @@ def add_new_person_view(request):
 
 
 def modify_person_view(request, id):
-
     if request.method == "POST":
 
         modified_person = Person.objects.get(pk=id)
@@ -60,7 +59,6 @@ def modify_person_view(request, id):
 
             return render(request, "modify_person.html", ctx)
 
-
         address = Address.objects.get(pk=address_id)
 
         phone_number = Phone.objects.filter(person_id=id)
@@ -77,15 +75,13 @@ def modify_person_view(request, id):
             "emails": emails,
             "email_types": email_types,
 
-               }
+        }
 
         return render(request, "modify_person.html", ctx)
 
 
 def modify_address_view(request, id):
-
     if request.method == "POST":
-
         id = int(id)
 
         modified_person = Person.objects.get(address_id=id)
@@ -113,9 +109,7 @@ def modify_address_view(request, id):
 
 
 def delete_address_view(request, id):
-
     if request.method == "GET":
-
         id = int(id)
         address_to_delete = Address.objects.get(pk=id)
         address_to_delete.delete()
@@ -129,16 +123,15 @@ def delete_address_view(request, id):
 
 
 def add_address_view(request, id):
-
     if request.method == "POST":
-
         city = request.POST.get('city')
         street_name = request.POST.get('street_name')
         house_number = request.POST.get('house_number')
         flat_number = request.POST.get('flat_number')
 
         id = int(id)
-        new_address = Address.objects.create(city=city, street_name=street_name, house_number=house_number, flat_number=flat_number)
+        new_address = Address.objects.create(city=city, street_name=street_name, house_number=house_number,
+                                             flat_number=flat_number)
         modified_person = Person.objects.get(pk=id)
         modified_person.address_id = new_address.id
         modified_person.save()
@@ -150,9 +143,7 @@ def add_address_view(request, id):
 
 
 def add_phone_view(request, id):
-
     if request.method == "POST":
-
         phone_number = request.POST.get("phone_number")
         phone_type = request.POST.get("phone_type")
 
@@ -167,9 +158,7 @@ def add_phone_view(request, id):
 
 
 def modify_phone_view(request, id):
-
     if request.method == "POST":
-
         phone_number = request.POST.get('phone_number')
         phone_type = request.POST.get('phone_type')
 
@@ -190,9 +179,7 @@ def modify_phone_view(request, id):
 
 
 def delete_phone_view(request, id):
-
     if request.method == "GET":
-
         id = int(id)
 
         phone_to_delete = Phone.objects.get(pk=id)
@@ -206,9 +193,7 @@ def delete_phone_view(request, id):
 
 
 def add_email_view(request, id):
-
     if request.method == "POST":
-
         email = request.POST.get("email")
         email_type = request.POST.get("email_type")
 
@@ -222,9 +207,7 @@ def add_email_view(request, id):
 
 
 def modify_email_view(request, id):
-
     if request.method == "POST":
-
         email = request.POST.get('email')
         email_type = request.POST.get('email_type')
 
@@ -244,9 +227,7 @@ def modify_email_view(request, id):
 
 
 def delete_email_view(request, id):
-
     if request.method == "GET":
-
         id = int(id)
 
         email_to_delete = Email.objects.get(pk=id)
@@ -259,9 +240,7 @@ def delete_email_view(request, id):
 
 
 def delete_person_view(request, id):
-
     if request.method == "GET":
-
         id = int(id)
 
         person_to_delete = Person.objects.get(pk=id)
@@ -276,9 +255,7 @@ def delete_person_view(request, id):
 
 
 def show_all_users_view(request):
-
     if request.method == "GET":
-
         users = Person.objects.all().order_by('surname', 'name')
 
         ctx = {"users": users}
@@ -287,7 +264,6 @@ def show_all_users_view(request):
 
 
 def show_user_details_view(request, id):
-
     if request.method == "GET":
 
         person = Person.objects.get(pk=id)
@@ -321,7 +297,6 @@ def show_user_details_view(request, id):
 
 
 def add_group_view(request):
-
     if request.method == "POST":
 
         name = request.POST.get('name')
@@ -338,7 +313,6 @@ def add_group_view(request):
 
 
 def add_to_group_view(request, id):
-
     if request.method == "POST":
 
         user = Person.objects.get(pk=id)
@@ -371,9 +345,7 @@ def add_to_group_view(request, id):
 
 
 def show_all_groups_view(request):
-
     if request.method == "GET":
-
         groups = Groups.objects.all()
         # group_users = groups.person_set.all()
 
@@ -383,7 +355,6 @@ def show_all_groups_view(request):
 
 
 def group_search_view(request):
-
     if request.method == "POST":
         name = request.POST.get('name')
         surname = request.POST.get('surname')
@@ -405,9 +376,7 @@ def group_search_view(request):
 
 
 def delete_group_view(request, id):
-
     if request.method == "GET":
-
         id = int(id)
         group_to_delete = Groups.objects.get(pk=id)
         group_to_delete.delete()
@@ -421,9 +390,7 @@ def delete_group_view(request, id):
 
 
 def delete_person_from_group_view(request, id, person_id):
-
     if request.method == "GET":
-
         id = int(id)
         person_id = int(person_id)
         group = Groups.objects.get(pk=id)
@@ -438,10 +405,9 @@ def delete_person_from_group_view(request, id, person_id):
 
         return render(request, "standard_response.html", ctx)
 
+
 def modify_group_view(request, id):
-
     if request.method == "POST":
-
         new_group_name = request.POST.get('name')
 
         modified_group = Groups.objects.get(pk=id)
@@ -459,8 +425,7 @@ def modify_group_view(request, id):
         return render(request, "modify_group.html", ctx)
 
     if request.method == "GET":
-
-        groups = Groups.objects.all()
+        groups = Groups.objects.get(pk=id)
 
         ctx = {"group": groups}
 
