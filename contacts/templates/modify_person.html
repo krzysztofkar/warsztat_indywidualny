@@ -236,6 +236,29 @@
         </tbody>
     </table>
 
-
+    <h4 class="h4 h4Colors">User Groups:</h4>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Group</th>
+            <th scope="col" class="tdAlignRight">Remove from Group</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for gr in modified_person.groups_set.all %}
+            <tr>
+                <td>{{ gr.name }}</td>
+                <td class="tdAlignRight"><a href="/delete_user_from_group/{{ gr.id }}/{{ modified_person.id }}">
+                        <button class="btn btn-danger">Remove</button>
+                    </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h5 class="h5">Modify User Group Assigment</h5>
+    <hr>
+     <a href="/add_to_group/{{ modified_person.id }}">
+                        <button class="btn btn-primary">Group Assign</button></a>
 {% endif %}
 {% include "footer.html" %}

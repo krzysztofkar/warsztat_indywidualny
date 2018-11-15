@@ -5,36 +5,38 @@
 
 {% else %}
     <h3 class="h3 h3Colors">All Groups</h3>
-
     {% for gr in groups %}
         <h4 class="h4 h4Colors" style="height: 60px">
             <p class="pGroupsHeader">Group: {{ gr.name }}</p>
-            <a href="/delete_group/{{ gr.id }}" style="float: right">
+                       <a href="/delete_group/{{ gr.id }}" style="float: right">
                 <button class="btn btn-danger">Delete Group!</button>
             </a>
+            <a href="/modify_group/{{ gr.id }}" style="float: right">
+                <button class="btn btn-warning" style="margin: 0 10px">Modify Group</button><p></p>
+            </a>
+
         </h4>
-       {% if gr.person.all %}
-        <table class="table">
-            <tbody>
-            <thead class="thead-light">
-            <th scope="col">User</th>
-            <th scope="col" style="text-align: right">Remove User from Group</th>
-            </thead>
+        {% if gr.person.all %}
+            <table class="table">
+                <tbody>
+                <thead class="thead-light">
+                <th scope="col">User</th>
+                <th scope="col" style="text-align: right">Remove User from Group</th>
+                </thead>
 
-            {% for usr in gr.person.all %}
-                <tr>
-                    <td>
-                        <a href="/show_person_details/{{ usr.id }}">{{ usr.name }} {{ usr.surname }}</a></td>
-
-                    <td class="tdAlignRight"><a href="/delete_user_from_group/{{ gr.id }}/{{ usr.id }}">
-                        <button class="btn btn-danger">Remove</button>
-                    </a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                {% for usr in gr.person.all %}
+                    <tr>
+                        <td>
+                            <a href="/show_person_details/{{ usr.id }}">{{ usr.name }} {{ usr.surname }}</a></td>
+                        <td class="tdAlignRight"><a href="/delete_user_from_group/{{ gr.id }}/{{ usr.id }}">
+                            <button class="btn btn-danger">Remove</button>
+                        </a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         {% else %}
-           <p>No users in this Group</p>
+            <p>No users in this Group</p>
         {% endif %}
     {% endfor %}
 
