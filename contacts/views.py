@@ -385,13 +385,17 @@ def show_all_groups_view(request):
 def group_search_view(request):
 
     if request.method == "POST":
-        search = request.POST.get('search')
+        name = request.POST.get('name')
+        surname = request.POST.get('surname')
 
-        Groups.objects.filter(person__name__contains=search)
-        Groups.objects.filter(person__surname__contains=search)
+        search_user = Person.objects.filter(name__contains=name).filter(surname__contains=surname)
 
-            ctx = {
+        ctx = {
+            'user': search_user,
+        }
 
-            }
+        return render(request, 'group_search.html', ctx)
 
-            return render(request, 'group_search.html', ctx)
+    elif request.method == "GET":
+
+        return render(request, 'group_search.html', {})
