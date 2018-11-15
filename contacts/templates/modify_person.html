@@ -44,12 +44,12 @@
 
             <div class="form-group">
                 <label>House Number:</label>
-                <input type="number" name="house_number" min=1 value="{{ address.house_number }}"
+                <input type="text" name="house_number" maxlength="6" value="{{ address.house_number }}"
                        class="form-control formNumbers">
             </div>
             <div class="form-group">
                 <label>Flat Number:</label>
-                <input type="number" name="flat_number" min=1 value="{{ address.flat_number }}"
+                <input type="text" name="flat_number" maxlength="6" value="{{ address.flat_number }}"
                        class="form-control formNumbers">
             </div>
             <div class="form-group">
@@ -74,11 +74,11 @@
 
             <div class="form-group">
                 <label>House Number:</label>
-                <input type="number" name="house_number" min=1 class="form-control formNumbers">
+                <input type="text" maxlength="6" name="house_number" min=1 class="form-control formNumbers">
             </div>
             <div class="form-group">
                 <label>Flat Number:</label>
-                <input type="number" name="flat_number" min=1 class="form-control formNumbers">
+                <input type="text" maxlength="6" name="flat_number" min=1 class="form-control formNumbers">
             </div>
             <div class="form-group">
                 <label>City</label>
