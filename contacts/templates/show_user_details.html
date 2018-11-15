@@ -2,7 +2,7 @@
 {% if msg %}
 
 {% else %}
-    <h3 class="h3 h3Colors">User: {{ person.name }}</h3>
+    <h3 class="h3 h3Colors">User: {{ person.name }} {{ person.surname }}</h3>
     <h4 class="h4 h4Colors">Basic information:</h4>
     <table class="table">
         <thead class="thead-light">
@@ -103,6 +103,21 @@
     {% else %}
         <p>No email address</p>
     {% endif %}
+    <h4 class="h4 h4Colors">User Groups:</h4>
+    {% if person.groups_set.all %}
+        <table class="table">
+            <tbody>
+            {% for gr in person.groups_set.all %}
+                <tr>
+                    <td>{{ gr.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>User not assigned to any groups</p>
+    {% endif %}
+
     <hr>
     <a href="/modify/{{ person.id }}">
         <button type="submit" class="btn btn-warning">Modify Person!</button>
