@@ -55,7 +55,22 @@ def modify_person_view(request, id):
         address_id = modified_person.address_id
 
         if address_id is None:
-            ctx = {"modified_person": modified_person}
+            address = None
+            phone_number = Phone.objects.filter(person_id=id)
+            phone_types = Phone.PHONE_TYPES
+
+            emails = Email.objects.filter(person_id=id)
+            email_types = Email.EMAIL_TYPES
+
+            ctx = {
+                "modified_person": modified_person,
+                "address": address,
+                "phone_number": phone_number,
+                "phone_types": phone_types,
+                "emails": emails,
+                "email_types": email_types,
+
+            }
 
             return render(request, "modify_person.html", ctx)
 
@@ -148,10 +163,14 @@ def add_phone_view(request, id):
         phone_type = request.POST.get("phone_type")
 
         new_phone = Phone.objects.create(phone_number=phone_number, phone_type=phone_type, person_id=id)
+        phone_type = Phone.PHONE_TYPES
+        new_phone = Phone.objects.get(pk=new_phone.id)
 
         msg = "New Phone Added!"
         ctx = {"msg": msg,
-               "new_phone": new_phone
+               "new_phone": new_phone,
+               "phone_type": phone_type
+
                }
 
         return render(request, "add_phone_response.html", ctx)
@@ -198,10 +217,14 @@ def add_email_view(request, id):
         email_type = request.POST.get("email_type")
 
         new_mail = Email.objects.create(email=email, email_type=email_type, person_id=id)
+        email_type = Email.EMAIL_TYPES
+        new_mail = Email.objects.get(pk=new_mail.id)
 
         msg = "New Mail Added!"
         ctx = {"msg": msg,
-               "emails": new_mail}
+               "emails": new_mail,
+               "email_type": email_type,
+               }
 
         return render(request, "add_email_response.html", ctx)
 
