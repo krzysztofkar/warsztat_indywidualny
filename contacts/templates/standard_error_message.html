@@ -1,0 +1,15 @@
+{% include  "header.html" %}
+
+{% if error_msg %}
+    <h3 class="h3">{{ error_msg }}</h3>
+    <br>
+    <a href="{{ next }}">
+        <button class="btn btn-primary">Back</button>
+    </a>
+
+{% else %}
+    Nothing here .......!!!! Check code!
+
+{% endif %}
+
+{% include "footer.html" %}

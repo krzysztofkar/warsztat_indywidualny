@@ -6,6 +6,7 @@ class Person(models.Model):
     name = models.CharField(max_length=64)
     surname = models.CharField(max_length=64)
     description = models.TextField()
+    picture = models.ImageField(null=True)
     address = models.ForeignKey('Address', on_delete=models.SET_NULL, null=True)
 
 

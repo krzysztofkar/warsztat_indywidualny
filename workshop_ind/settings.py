@@ -123,3 +123,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'contacts/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'contacts/media/'

@@ -88,7 +88,71 @@ table {
 .tdAlignRight {
     text-align: right;
 }
+
 .pGroupsHeader {
     display: inline;
     line-height: 40px;
+}
+
+.tdAvatar {
+    width: 400px;
+    max-height: 400px;
+    display: block;
+    overflow: hidden;
+}
+
+.tdAvatar img {
+}
+
+.thAvatar {
+    width: 400px;
+}
+
+.col20 {
+    width: 20%;
+}
+
+.col60 {
+    width: 60%;
+}
+
+.col40 {
+    width: 40%;
+}
+
+.userDetailsDiv {
+    display: inline-block;
+    vertical-align: top;
+    width: 69.5%;
+}
+
+.divAvatar {
+    display: inline-block;
+    height: 400px;
+    width: 30%;
+    overflow: hidden;
+    position: relative;
+}
+
+.divAvatar img {
+    position: absolute;
+    object-fit: cover;
+}
+
+.noPicture {
+    width: 100%;
+    height: 100%;
+    border: rgb(222, 226, 230) 1px solid;
+    margin: 0;
+    padding: 0;
+    display: table;
+}
+
+.noPicture i {
+    color: rgb(222, 226, 230);
+    font-size: 270px;
+    align-content: baseline;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
 }

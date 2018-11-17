@@ -4,28 +4,44 @@
 {% else %}
     <h3 class="h3 h3Colors">User: {{ person.name }} {{ person.surname }}</h3>
     <h4 class="h4 h4Colors">Basic information:</h4>
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col" class="centerTableCol">Label</th>
-            <th scope="col" class="centerTableCol">Basic Data</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Name</td>
-            <td>{{ person.name }}</td>
-        </tr>
-        <tr>
-            <td>Surname</td>
-            <td>{{ person.surname }}</td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td>{{ person.description }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="userDetailsDiv">
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col" class="centerTableCol">Label</th>
+                <th scope="col" class="centerTableCol">Basic Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Name</td>
+                <td>{{ person.name }}</td>
+            </tr>
+            <tr>
+                <td>Surname</td>
+                <td>{{ person.surname }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ person.description }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="divAvatar">
+        {% load static %}
+        <script src="{% static 'js/scripts.js' %}"></script>
+        {% if person.picture %}
+            <img id="avatarImage"  src="{{ person.picture.url }}" alt="{{ person.name }} {{ person.surname }}">
+        {% else %}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+                  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+                  crossorigin="anonymous">
+            <div class="noPicture">
+                <i class="fas fa-user-alt"></i>
+            </div>
+        {% endif %}
+    </div>
 
     <h4 class="h4 h4Colors">Address:</h4>
     {% if address %}

@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from contacts.models import Person, Address, Phone, Email, Groups
+from django.conf import settings
+from os import path, rename, remove
+
+# this is image processing library
+from PIL import Image
 
 
 # Create your views here.
@@ -8,17 +13,98 @@ from contacts.models import Person, Address, Phone, Email, Groups
 
 def add_new_person_view(request):
     if request.method == "POST":
-
         name = request.POST.get('name')
         surname = request.POST.get('surname')
         description = request.POST.get('description')
+        next = request.POST.get('next')
+        if 'picture' in request.FILES:
+            picture = request.FILES['picture']
+            new_guy = Person.objects.create(name=name, surname=surname, description=description, picture=picture)
 
-        new_guy = Person.objects.create(name=name, surname=surname, description=description)
+            # avatar will be 400px x 400px so we define min and max dimensions in px
+            max_picture_width = 600
+            min_picture_width = 400
+            min_picture_height = 400
+            max_picture_height = 600
+
+            # check if this is an image and check required dimensions and file format
+            full_path_to_file = settings.MEDIA_ROOT + str(new_guy.picture)
+
+
+            # not all formats are fully supported by Pillow
+            # perhaps there is more but no time to test it
+
+            non_convertable_image_files = [".png", ".gif", ".nef", ".cr2", ".psd"]
+
+            try:
+                im = Image.open(full_path_to_file)
+                picture_width = im.size[0]
+                picture_height = im.size[1]
+                if picture_width < min_picture_width or picture_height < min_picture_height:
+                    e = "Picture should be at least 400px at width and height!"
+                    im.close()
+                    remove(full_path_to_file)
+                    new_guy.delete()
+                    return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
+                filename, extension = path.splitext((str(new_guy.picture)).lower())
+                if extension in non_convertable_image_files:
+                    raise Exception
+            except Exception as e:
+                e = "This is not a supported image file. Allowed formats: jpg, tif, bmp."
+                remove(full_path_to_file)
+                new_guy.delete()
+                return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
+
+            # resize image, convert file to jpg
+            ratio = picture_width / picture_height
+
+            if picture_width > max_picture_width:
+                if ratio > 1:
+                    picture_height = min_picture_height
+                    picture_width = picture_height * ratio
+                else:
+                    picture_width = min_picture_width
+                    picture_height = picture_width / ratio
+
+            picture_height = int(round(picture_height, 0))
+            picture_width = int(round(picture_width, 0))
+
+            im = im.resize((picture_width, picture_height))
+
+            filename, extension = path.splitext((str(new_guy.picture).lower()))
+            outfile = filename + ".jpg"
+            if new_guy.picture != outfile:
+                try:
+                    im.save(settings.MEDIA_ROOT + outfile, "JPEG")
+                    new_guy.picture = outfile
+                    new_guy.save()
+                except IOError as e:
+                    print("This file can not be converted to jpg.")
+                except Exception as e:
+                    im.close()
+                    return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
+            else:
+                im.save(settings.MEDIA_ROOT + outfile, "JPEG")
+                new_guy.picture = outfile
+                new_guy.save()
+
+            im.close()
+
+            # rename picture if name and surname were given
+            if new_guy.name and new_guy.surname:
+                filename, extension = path.splitext(str(new_guy.picture))
+                new_picture_name = "avatar-" + new_guy.name + "-" + new_guy.surname + extension
+                rename(settings.MEDIA_ROOT + str(new_guy.picture), settings.MEDIA_ROOT + new_picture_name)
+                new_guy.picture = new_picture_name
+                new_guy.save()
+        else:
+            new_guy = Person.objects.create(name=name, surname=surname, description=description)
 
         msg = "New person added!"
 
         ctx = {"msg": msg,
-               "new_guy": new_guy}
+               "new_guy": new_guy,
+               }
 
         return render(request, "add_new_person.html", ctx)
 
@@ -35,17 +121,110 @@ def modify_person_view(request, id):
         name = request.POST.get('name')
         surname = request.POST.get('surname')
         description = request.POST.get('description')
+        next = request.POST.get('next')
+        if 'picture' in request.FILES:
+            picture = request.FILES['picture']
+            modified_person.name = name
+            modified_person.surname = surname
+            modified_person.description = description
 
-        modified_person.name = name
-        modified_person.surname = surname
-        modified_person.description = description
-        modified_person.save()
+            # full_path_to_file = settings.MEDIA_ROOT + str(picture)
+
+            # check if user had avatar and delete it
+            # if modified_person.picture:
+            #     full_path_to_file = settings.MEDIA_ROOT + str(modified_person.picture)
+            #     remove(full_path_to_file)
+            # modified_person.picture = picture
+            # modified_person.save()
+
+            # avatar will be 400px x 400px so we define min and max dimensions in px
+            max_picture_width = 600
+            min_picture_width = 400
+            min_picture_height = 400
+            max_picture_height = 600
+
+            # check if this is an image and check required dimensions and file format
+            # full_path_to_file = settings.MEDIA_ROOT + str(modified_person.picture)
+
+            # not all formats are fully supported by Pillow
+            # perhaps there is more but no time to test it
+
+            non_convertable_image_files = [".png", ".gif", ".nef", ".cr2", ".psd"]
+
+            try:
+                im = Image.open(picture)
+                # im = Image.open(full_path_to_file)
+                picture_width = im.size[0]
+                picture_height = im.size[1]
+                if picture_width < min_picture_width or picture_height < min_picture_height:
+                    e = "Picture should be at least 400px at width and height!"
+                    im.close()
+                    # remove(full_path_to_file)
+                    # modified_person.delete()
+                    return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
+                filename, extension = path.splitext((str(picture)).lower())
+                if extension in non_convertable_image_files:
+                    raise Exception
+            except Exception as e:
+                e = "This is not a supported image file. Allowed formats: jpg, tif, bmp."
+                # remove(full_path_to_file)
+                # modified_person.delete()
+                return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
+
+            # resize image, convert file to jpg
+            ratio = picture_width / picture_height
+
+            if picture_width > max_picture_width:
+                if ratio > 1:
+                    picture_height = min_picture_height
+                    picture_width = picture_height * ratio
+                else:
+                    picture_width = min_picture_width
+                    picture_height = picture_width / ratio
+
+            picture_height = int(round(picture_height, 0))
+            picture_width = int(round(picture_width, 0))
+
+            im = im.resize((picture_width, picture_height))
+
+            filename, extension = path.splitext((str(picture).lower()))
+            # filename, extension = path.splitext((str(modified_person.picture).lower()))
+            outfile = filename + ".jpg"
+            if modified_person.picture != outfile:
+                try:
+                    im.save(settings.MEDIA_ROOT + outfile, "JPEG")
+                    modified_person.picture = outfile
+                    modified_person.save()
+                except IOError as e:
+                    print("This file can not be converted to jpg.")
+                except Exception as e:
+                    im.close()
+                    return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
+            else:
+                im.save(settings.MEDIA_ROOT + outfile, "JPEG")
+                modified_person.picture = outfile
+                modified_person.save()
+
+            im.close()
+
+            # rename picture if name and surname were given
+            if modified_person.name and modified_person.surname:
+                filename, extension = path.splitext(str(modified_person.picture))
+                new_picture_name = "avatar-" + modified_person.name + "-" + modified_person.surname + extension
+                rename(settings.MEDIA_ROOT + str(modified_person.picture), settings.MEDIA_ROOT + new_picture_name)
+                modified_person.picture = new_picture_name
+                modified_person.save()
+        else:
+            modified_person.name = name
+            modified_person.surname = surname
+            modified_person.description = description
+            modified_person.save()
 
         msg = "Personal details modified!"
 
-        ctx = {"msg": msg, "modified_person": modified_person}
+        ctx = {"msg": msg, "modified_person": modified_person, 'next': next, }
 
-        return render(request, "modify_person_response.html", ctx)
+        return render(request, "modify_person_response.html", ctx, )
 
     elif request.method == "GET":
 
@@ -72,7 +251,7 @@ def modify_person_view(request, id):
 
             }
 
-            return render(request, "modify_person.html", ctx)
+            return render(request, "modify_person.html", ctx, )
 
         address = Address.objects.get(pk=address_id)
 
@@ -106,6 +285,7 @@ def modify_address_view(request, id):
         street_name = request.POST.get('street_name')
         house_number = request.POST.get('house_number')
         flat_number = request.POST.get('flat_number')
+        next = request.POST.get('next')
 
         modified_address.city = city
         modified_address.street_name = street_name
@@ -117,7 +297,8 @@ def modify_address_view(request, id):
 
         ctx = {"msg": msg,
                "address": modified_address,
-               "modified_person": modified_person
+               "modified_person": modified_person,
+               "next": next,
                }
 
         return render(request, "add_address_response.html", ctx)
@@ -143,6 +324,7 @@ def add_address_view(request, id):
         street_name = request.POST.get('street_name')
         house_number = request.POST.get('house_number')
         flat_number = request.POST.get('flat_number')
+        next = request.POST.get('next')
 
         id = int(id)
         new_address = Address.objects.create(city=city, street_name=street_name, house_number=house_number,
@@ -152,7 +334,7 @@ def add_address_view(request, id):
         modified_person.save()
 
         msg = "New Address Added"
-        ctx = {'msg': msg, "address": new_address, "modified_person": modified_person}
+        ctx = {'msg': msg, "address": new_address, "modified_person": modified_person, "next": next, }
 
         return render(request, "add_address_response.html", ctx)
 
@@ -161,6 +343,7 @@ def add_phone_view(request, id):
     if request.method == "POST":
         phone_number = request.POST.get("phone_number")
         phone_type = request.POST.get("phone_type")
+        next = request.POST.get('next')
 
         new_phone = Phone.objects.create(phone_number=phone_number, phone_type=phone_type, person_id=id)
         phone_type = Phone.PHONE_TYPES
@@ -169,7 +352,8 @@ def add_phone_view(request, id):
         msg = "New Phone Added!"
         ctx = {"msg": msg,
                "new_phone": new_phone,
-               "phone_type": phone_type
+               "phone_type": phone_type,
+               "next": next,
 
                }
 
@@ -180,6 +364,7 @@ def modify_phone_view(request, id):
     if request.method == "POST":
         phone_number = request.POST.get('phone_number')
         phone_type = request.POST.get('phone_type')
+        next = request.POST.get('next')
 
         modified_phone = Phone.objects.get(pk=id)
 
@@ -191,7 +376,8 @@ def modify_phone_view(request, id):
 
         msg = "Phone modified!"
         ctx = {'msg': msg,
-               "new_phone": modified_phone
+               "new_phone": modified_phone,
+               "next": next,
                }
 
         return render(request, "add_phone_response.html", ctx)
@@ -215,6 +401,7 @@ def add_email_view(request, id):
     if request.method == "POST":
         email = request.POST.get("email")
         email_type = request.POST.get("email_type")
+        next = request.POST.get('next')
 
         new_mail = Email.objects.create(email=email, email_type=email_type, person_id=id)
         email_type = Email.EMAIL_TYPES
@@ -224,6 +411,7 @@ def add_email_view(request, id):
         ctx = {"msg": msg,
                "emails": new_mail,
                "email_type": email_type,
+               "next": next,
                }
 
         return render(request, "add_email_response.html", ctx)
@@ -233,6 +421,7 @@ def modify_email_view(request, id):
     if request.method == "POST":
         email = request.POST.get('email')
         email_type = request.POST.get('email_type')
+        next = request.POST.get('next')
 
         modified_email = Email.objects.get(pk=id)
 
@@ -243,7 +432,8 @@ def modify_email_view(request, id):
 
         msg = "Mail modified!"
         ctx = {'msg': msg,
-               "emails": modified_email
+               "emails": modified_email,
+               "next": next,
                }
 
         return render(request, "add_email_response.html", ctx)
@@ -268,7 +458,11 @@ def delete_person_view(request, id):
 
         person_to_delete = Person.objects.get(pk=id)
 
-        person_to_delete.address.delete()
+        if person_to_delete.address:
+            person_to_delete.address.delete()
+        if person_to_delete.picture:
+            full_path_to_file = settings.MEDIA_ROOT + str(person_to_delete.picture)
+            remove(full_path_to_file)
         person_to_delete.delete()
 
         msg = "Person deleted!"

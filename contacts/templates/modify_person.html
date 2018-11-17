@@ -7,31 +7,51 @@
 
     <h3 class="h3 h3Colors">Modify Person data:</h3>
     <h4 class="h4 h4Colors">Basic information:</h4>
+    <div class="userDetailsDiv">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="name" maxlength="64" value="{{ modified_person.name }}"
+                       class="form-control shortFormsFields">
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="surname" maxlength="64" value="{{ modified_person.surname }}"
+                       class="form-control shortFormsFields">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" name="description" value="{{ modified_person.description }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Replace profile picture:</label>
+                <input type="file" name="picture" class="form-control-file">
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-warning">Modify Person!</button>
+            <a href="/delete_person/{{ modified_person.id }}">
+                <button type="button" class="btn btn-danger">Delete Person!</button>
+            </a>
+            <input type="hidden" name="next" value="{{ request.path }}">
+        </form>
+    </div>
+    <div class="divAvatar">
+        {% load static %}
+        <script src="{% static 'js/scripts.js' %}"></script>
+        {% if modified_person.picture %}
+            <img id="avatarImage" src="{{ modified_person.picture.url }}"
+                 alt="{{ modified_person.name }} {{ modified_person.surname }}">
+        {% else %}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+                  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+                  crossorigin="anonymous">
+            <div class="noPicture">
+                <i class="fas fa-user-alt"></i>
+            </div>
+        {% endif %}
+    </div>
 
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label>First Name</label>
-            <input type="text" name="name" maxlength="64" value="{{ modified_person.name }}"
-                   class="form-control shortFormsFields">
-        </div>
-        <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" name="surname" maxlength="64" value="{{ modified_person.surname }}"
-                   class="form-control shortFormsFields">
-        </div>
-        <div class="form-group">
-            <label>Description</label>
-            <input type="text" name="description" value="{{ modified_person.description }}" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-warning">Modify Person!</button>
-        <a href="/delete_person/{{ modified_person.id }}">
-            <button type="button" class="btn btn-danger">Delete Person!</button>
-        </a>
-
-    </form>
-
-    <br><br>
     <h4 class="h4 h4Colors">Address:</h4>
     {% if address %}
         <form action="/modify_address/{{ address.id }}" method="post">
@@ -61,6 +81,7 @@
             <a href="/delete/{{ address.id }}">
                 <button type="button" class="btn btn-danger">Delete Address!</button>
             </a>
+            <input type="hidden" name="next" value="{{ request.path }}">
         </form>
 
         <br><br>
@@ -85,6 +106,7 @@
                 <input type="text" name="city" maxlength="64" class="form-control shortFormsFields ">
             </div>
             <button type="submit" class="btn btn-primary">Add Address!</button>
+            <input type="hidden" name="next" value="{{ request.path }}">
         </form>
         <br>
         <hr>
@@ -124,6 +146,7 @@
                         <td class="centerTableCol">
                             <button type="submit" class="btn btn-warning">Modify Phone!</button>
                         </td>
+                        <input type="hidden" name="next" value="{{ request.path }}">
                     </form>
                     <td class="centerTableCol"><a href="/delete_phone/{{ tel_number.id }}">
                         <button class="btn btn-danger">Delete Phone!</button>
@@ -163,6 +186,7 @@
                 <td class="centerTableCol">
                     <button type="submit" class="btn btn-primary">Add Phone</button>
                 </td>
+                <input type="hidden" name="next" value="{{ request.path }}">
             </form>
         </tr>
         </tbody>
@@ -202,6 +226,7 @@
                         <td class="centerTableCol">
                             <button type="submit" class="btn btn-warning">Modify Email!</button>
                         </td>
+                        <input type="hidden" name="next" value="{{ request.path }}">
                     </form>
                     <td class="centerTableCol"><a href="/delete_email/{{ email_address.id }}">
                         <button class="btn btn-danger">Delete Email!</button>
@@ -241,6 +266,7 @@
                 <td class="centerTableCol">
                     <button type="submit" class="btn btn-primary">Add Email</button>
                 </td>
+                <input type="hidden" name="next" value="{{ request.path }}">
             </form>
         </tr>
         </tbody>
