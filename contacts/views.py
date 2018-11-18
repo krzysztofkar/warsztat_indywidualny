@@ -7,9 +7,7 @@ from os import path, rename, remove
 # this is image processing library
 from PIL import Image
 
-
 # Create your views here.
-
 
 def add_new_person_view(request):
     if request.method == "POST":
@@ -29,7 +27,6 @@ def add_new_person_view(request):
 
             # check if this is an image and check required dimensions and file format
             full_path_to_file = settings.MEDIA_ROOT + str(new_guy.picture)
-
 
             # not all formats are fully supported by Pillow
             # perhaps there is more but no time to test it
@@ -58,7 +55,7 @@ def add_new_person_view(request):
             # resize image, convert file to jpg
             ratio = picture_width / picture_height
 
-            if picture_width > max_picture_width:
+            if picture_width > max_picture_width or picture_height > max_picture_height:
                 if ratio > 1:
                     picture_height = min_picture_height
                     picture_width = picture_height * ratio
@@ -69,12 +66,11 @@ def add_new_person_view(request):
             picture_height = int(round(picture_height, 0))
             picture_width = int(round(picture_width, 0))
 
-            im = im.resize((picture_width, picture_height))
-
             filename, extension = path.splitext((str(new_guy.picture).lower()))
             outfile = filename + ".jpg"
             if new_guy.picture != outfile:
                 try:
+                    im = im.resize((picture_width, picture_height))
                     im.save(settings.MEDIA_ROOT + outfile, "JPEG")
                     new_guy.picture = outfile
                     new_guy.save()
@@ -101,16 +97,12 @@ def add_new_person_view(request):
             new_guy = Person.objects.create(name=name, surname=surname, description=description)
 
         msg = "New person added!"
-
         ctx = {"msg": msg,
                "new_guy": new_guy,
                }
-
         return render(request, "add_new_person.html", ctx)
 
-
     elif request.method == "GET":
-
         return render(request, "add_new_person.html", {})
 
 
@@ -122,20 +114,12 @@ def modify_person_view(request, id):
         surname = request.POST.get('surname')
         description = request.POST.get('description')
         next = request.POST.get('next')
+
         if 'picture' in request.FILES:
             picture = request.FILES['picture']
             modified_person.name = name
             modified_person.surname = surname
             modified_person.description = description
-
-            # full_path_to_file = settings.MEDIA_ROOT + str(picture)
-
-            # check if user had avatar and delete it
-            # if modified_person.picture:
-            #     full_path_to_file = settings.MEDIA_ROOT + str(modified_person.picture)
-            #     remove(full_path_to_file)
-            # modified_person.picture = picture
-            # modified_person.save()
 
             # avatar will be 400px x 400px so we define min and max dimensions in px
             max_picture_width = 600
@@ -143,38 +127,27 @@ def modify_person_view(request, id):
             min_picture_height = 400
             max_picture_height = 600
 
-            # check if this is an image and check required dimensions and file format
-            # full_path_to_file = settings.MEDIA_ROOT + str(modified_person.picture)
-
-            # not all formats are fully supported by Pillow
-            # perhaps there is more but no time to test it
-
             non_convertable_image_files = [".png", ".gif", ".nef", ".cr2", ".psd"]
 
             try:
                 im = Image.open(picture)
-                # im = Image.open(full_path_to_file)
                 picture_width = im.size[0]
                 picture_height = im.size[1]
                 if picture_width < min_picture_width or picture_height < min_picture_height:
                     e = "Picture should be at least 400px at width and height!"
                     im.close()
-                    # remove(full_path_to_file)
-                    # modified_person.delete()
                     return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
                 filename, extension = path.splitext((str(picture)).lower())
                 if extension in non_convertable_image_files:
                     raise Exception
             except Exception as e:
                 e = "This is not a supported image file. Allowed formats: jpg, tif, bmp."
-                # remove(full_path_to_file)
-                # modified_person.delete()
                 return render(request, "standard_error_message.html", {"error_msg": e, 'next': next})
 
             # resize image, convert file to jpg
             ratio = picture_width / picture_height
 
-            if picture_width > max_picture_width:
+            if picture_width > max_picture_width or picture_height > max_picture_height:
                 if ratio > 1:
                     picture_height = min_picture_height
                     picture_width = picture_height * ratio
@@ -185,13 +158,12 @@ def modify_person_view(request, id):
             picture_height = int(round(picture_height, 0))
             picture_width = int(round(picture_width, 0))
 
-            im = im.resize((picture_width, picture_height))
-
             filename, extension = path.splitext((str(picture).lower()))
-            # filename, extension = path.splitext((str(modified_person.picture).lower()))
             outfile = filename + ".jpg"
+
             if modified_person.picture != outfile:
                 try:
+                    im = im.resize((picture_width, picture_height))
                     im.save(settings.MEDIA_ROOT + outfile, "JPEG")
                     modified_person.picture = outfile
                     modified_person.save()
