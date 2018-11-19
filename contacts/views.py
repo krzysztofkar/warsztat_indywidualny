@@ -67,10 +67,11 @@ def add_new_person_view(request):
             picture_width = int(round(picture_width, 0))
 
             filename, extension = path.splitext((str(new_guy.picture).lower()))
+            im = im.resize((picture_width, picture_height))
             outfile = filename + ".jpg"
+
             if new_guy.picture != outfile:
                 try:
-                    im = im.resize((picture_width, picture_height))
                     im.save(settings.MEDIA_ROOT + outfile, "JPEG")
                     new_guy.picture = outfile
                     new_guy.save()
@@ -159,11 +160,11 @@ def modify_person_view(request, id):
             picture_width = int(round(picture_width, 0))
 
             filename, extension = path.splitext((str(picture).lower()))
+            im = im.resize((picture_width, picture_height))
             outfile = filename + ".jpg"
 
             if modified_person.picture != outfile:
                 try:
-                    im = im.resize((picture_width, picture_height))
                     im.save(settings.MEDIA_ROOT + outfile, "JPEG")
                     modified_person.picture = outfile
                     modified_person.save()
