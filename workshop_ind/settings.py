@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'contacts',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
-        'PASSWORD': 'coderslab',
+        'PASSWORD': 'postgres',
     }
 }
 
